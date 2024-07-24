@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  database:
+    image: mysql:5.7
+    restart: always
+    container_name: tutor
+    environment:
+      MYSQL_DATABASE: 'tutor_api'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'user'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3307:3306'
+    volumes:
+      - tutor-db:/var/lib/mysql
+
+# Names our volume
+volumes:
+  tutor-db:
