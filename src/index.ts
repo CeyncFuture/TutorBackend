@@ -22,13 +22,15 @@ app.use(cors(corsConfig));
 
 app.use(express.json());
 
-
+//Health checker
 app.get("/", (req, res) => {
   res.send("Hello, API is working!");
 });
 
+//Other endpoints
 app.use(constants.API.PREFIX, Router)
 
+//Define not found endpoint
 app.use((req, res, next) => {
   throw new NotFoundError("API Endpoint Not Found!");
 });
