@@ -11,15 +11,30 @@ import { corsConfig } from "./config/security/cors.config";
 import { constants } from "./constants";
 import DatabaseConfig from "./config/database/database.config";
 import DatabaseUtil from "./config/database/database.util";
+import { NotFoundError } from "./module/errors/classes/NotFoundError";
+import ErrorHandler from "./module/auth/middleware/errorHandler";
+import Router from "./router";
 
 const app = express();
 
 //configure specific CORS options
 app.use(cors(corsConfig));
 
+app.use(express.json());
+
+
 app.get("/", (req, res) => {
-  res.send("Hello, TypeScript Node Express!");
+  res.send("Hello, API is working!");
 });
+
+app.use(constants.API.PREFIX, Router)
+
+app.use((req, res, next) => {
+  throw new NotFoundError("API Endpoint Not Found!");
+});
+
+//error handle middleware
+app.use(ErrorHandler.handleErrors);
 
 const start = () => {
   try {

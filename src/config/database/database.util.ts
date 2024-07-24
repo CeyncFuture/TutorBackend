@@ -7,18 +7,32 @@
 import { IDbConnection } from "./database.interface";
 import { Sequelize } from "sequelize";
 
-//import models
+//import models schema
 import AuthSchema from "../../module/auth/auth.model";
+import UserSchema from "../../module/user/user.model";
+import StudentSchema from "../../module/student/student.model";
+import TutorSchema from "../../module/tutor/tutor.model";
+
+//import models
+import { Auth } from "../../module/auth/auth.interface";
+import { User } from "../../module/user/user.interface";
+import { Student } from "../../module/student/student.interface";
+import { Tutor } from "../../module/tutor/tutor.interface";
 
 
 //Add more models
 const modelDefiners: typeof AuthSchema[]  = [
-    AuthSchema
+    AuthSchema,
+    UserSchema,
+    StudentSchema,
+    TutorSchema
 ];
 
 //Add relations 
 const initializeModelRelations = (sequelize: Sequelize) => {
-
+  Auth.hasOne(User);
+  User.hasOne(Student);
+  User.hasOne(Tutor);
 }
 
 const connectDB = async (connection: IDbConnection) => {
@@ -44,8 +58,11 @@ const connectDB = async (connection: IDbConnection) => {
     //initiate model relations
     initializeModelRelations(sequelize);
 
+    sequelize.sync();
+
     console.log("Database connection OK!");
   } catch (error: any) {
+    
     console.log("Unable to connect to the database:");
   }
 };

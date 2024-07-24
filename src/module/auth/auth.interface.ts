@@ -7,6 +7,12 @@
 
 import { Model, Optional } from "sequelize";
 
+interface IError {
+  statusCode: number;
+  message: string;
+  data: any
+}
+
 interface IAuth {
   id: number;
   email: string;
@@ -27,4 +33,4 @@ interface IAuthSanitizedInputs {
   password?: string;
 }
 
-export { IAuth, IAuthModel, IAuthSanitizedInputs, Auth };
+export { IError, IAuth, IAuthModel, IAuthSanitizedInputs, Auth };
