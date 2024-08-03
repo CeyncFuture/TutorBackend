@@ -18,17 +18,17 @@ const login = async( sanitizedInputs: ILoginSanitizedInputs ) => {
     const dbExistAuth = await AuthService.findByEmail(sanitizedInputs.email);
     if (!dbExistAuth)
         throw new BadRequestError(errorMessages.BAD_REQUEST.EMAIL_NOT_EXISTS);
-    console.log("1");
+
     //Check password is correct.
     const isPasswordCorrect = await AuthUtil.compareStringWithHash(sanitizedInputs.password, dbExistAuth.password);
     if(!isPasswordCorrect)
         throw new BadRequestError(errorMessages.BAD_REQUEST.WRONG_PASSWORD);
-    console.log("2");
+
     //Retrieve user data
     const dbExistUser = await UserService.findByAuthId(dbExistAuth.id);
     if(!dbExistUser)
         throw new BadRequestError(errorMessages.BAD_REQUEST.EMAIL_NOT_EXISTS);
-    console.log("3");
+
     const authTokenBodyParam: IAuthTokenBody = {
         user_id: dbExistUser.id,
         role: dbExistAuth.role_id,
