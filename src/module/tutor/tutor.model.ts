@@ -28,7 +28,8 @@ const TutorSchema = async(sequelize: Sequelize) => {
                 references: {
                     model: constants.DATABASE.TABLE_NAMES.USERS,
                     key: "id",
-                }
+                },
+                onDelete: "CASCADE"
             }
         },
         {

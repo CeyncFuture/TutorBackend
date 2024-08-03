@@ -11,10 +11,10 @@ export const constants = {
     APP_NAME: "tutor",
     
     // Environment types
-    ENVIRONMENTS: {
+    ENV: {
         DEVELOPMENT: "development",
         PRODUCTION: "production",
-        TESTING: "testing",
+        TEST: "test",
     },
 
     // API settings
@@ -25,7 +25,7 @@ export const constants = {
     // Server settings
     SERVER: {
         PORT: process.env.PORT || 3000, // Use environment variable or default to 3000
-        ENVIRONMENT: process.env.NODE_ENV || "development", // Default to development
+        ENV: process.env.NODE_ENV || "development", // Default to development
     },
 
     //Database
@@ -51,24 +51,42 @@ export const constants = {
         DB_PASSWORD: process.env.DB_PASSWORD,
     },
 
-    //Time related
+    //Time and security related 
     SESSIONS: {
         TOKENS: {
             ACCESS_TOKEN: {
                 NAME: "access-token",
-                EXPIRATION: process.env.ACCESS_TOKEN_EXP
+                EXP: process.env.ACCESS_TOKEN_EXP
                     ? parseInt(process.env.ACCESS_TOKEN_EXP)
                     :  2 * 60, //default 2min
             },
             REFRESH_TOKEN: {
                 NAME: "refresh-token",
-                EXPIRATION: process.env.REFRESH_TOKEN_EXP
+                EXP: process.env.REFRESH_TOKEN_EXP
                     ? parseInt(process.env.REFRESH_TOKEN_EXP)
                     : 30 * 24 * 60, // default 30 days
             },
-            SECRET_KEY: process.env.SECRET_KEY || "default-secret-key*"
+            SECRET_KEY: process.env.SECRET_KEY || "default-secret-key",
         },
         COOLDOWN_TIME: 60, //second
         MAXIMUM_RETRY: 3, // Maximum number of retry attempts
-    }
+        PASSWORD_SALT_ROUND: process.env.PASSWORD_SALT_ROUND || 10,
+
+    },
+
+    //Formats
+    FORMATS: {
+        DATE: "YYYY-MM-DD",
+        TIME: "HH:mm:ss",
+        TIMESTAMP: "YYYY-MM-DD HH:mm:ss",
+    },
+
+    //User roles
+    USER_ROLES: {
+        ADMIN: "admin",
+        TUTOR: "tutor",
+        STUDENT: "student",
+        ALL: "all",
+    },
+
 };

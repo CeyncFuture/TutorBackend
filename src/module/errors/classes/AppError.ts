@@ -5,14 +5,20 @@
  * copyright 2024
 */
 
-export class AppError extends Error {
-    public readonly statusCode: number;
+class AppError extends Error {
+    public statusCode: number;
+    public data: {};
   
-    constructor(message: string, statusCode: number) {
+    constructor(message: string, statusCode: number, data?: {}) {
+      
       super(message);
       this.statusCode = statusCode;
-  
-      // Set the prototype explicitly to make instanceof checks work correctly
-      Object.setPrototypeOf(this, new.target.prototype);
+
+      if (data) 
+        this.data = data;
+      else 
+        this.data = {};
     }
-  }
+}
+
+export default AppError;

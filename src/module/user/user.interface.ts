@@ -8,29 +8,35 @@
 import { Model, Optional } from "sequelize";
 
 interface IUser {
-    id: number;
-    name: string;
-    role_id: string;
+    id?: number;
     auth_id: number;
+    first_name: string;
+    last_name: string;
+    country_code?: string;
+    phone_number?: string;
 }
 
-interface IUserModel extends Optional <IUser, "id"> {}
+interface IUserModel extends Optional <IUser, "id" | "country_code" | "phone_number"> {}
 
 class User extends Model<IUser, IUserModel> implements IUser {
     public id!: number;
-    public name!: string;
-    public role_id!: string;
     public auth_id!: number;
+    public first_name!: string;
+    public last_name!: string;
+    public country_code?: string;
+    public phone_number?: string;
 } 
 
-interface IUserInputSanitizer {
-    name: string;
-    role_id: string;
+interface IUserSanitizedInput{
+    first_name: string;
+    last_name: string;
+    country_code?: string;
+    phone_number?: string;
 }
 
 export {
+    User,
     IUser,
     IUserModel,
-    IUserInputSanitizer,
-    User
+    IUserSanitizedInput,
 }

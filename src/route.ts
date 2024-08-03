@@ -7,14 +7,15 @@
 
 import express from "express";
 
+//import routes
+import AuthRouter from "./module/auth/auth.route";
+
 const router = express.Router();
 
 //add new routes to here
 router.use(
-    "/test",
-    (req, res) => {
-        res.send("test");
-    }
+    "/auth",
+    AuthRouter
 );
 
 export default router;

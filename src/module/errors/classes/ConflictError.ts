@@ -1,6 +1,6 @@
 /**
  * author Thilina Pahalagedara
- * created on 24-07-2024-19h-45m
+ * created on 03-08-2024-23h-34m
  * github: https://github.com/Pahalagedara
  * copyright 2024
 */
@@ -9,10 +9,10 @@ import { StatusCodes } from 'http-status-codes';
 import AppError from './AppError';
 
 // Represents an error when a requested resource is not found
-class NotFoundError extends AppError {
+class ConflictError extends AppError {
   constructor(message: string) {
-    super(message, StatusCodes.NOT_FOUND);
+    super(message, StatusCodes.CONFLICT);
   }
 }
 
-export default NotFoundError;
+export default ConflictError;

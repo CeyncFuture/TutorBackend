@@ -6,11 +6,13 @@
 */
 
 import { StatusCodes } from 'http-status-codes';
-import { AppError } from './AppError';
+import AppError from './AppError';
 
 // Represents an error when a user is not authorized to access a resource.
-export class UnauthorizedError extends AppError {
-  constructor(message?: string) {
-    super(message || "Unauthorized access!", StatusCodes.UNAUTHORIZED);
+class UnAuthorizedError extends AppError {
+  constructor(message: string) {
+    super(message, StatusCodes.UNAUTHORIZED);
   }
 }
+
+export default UnAuthorizedError;

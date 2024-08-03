@@ -7,11 +7,11 @@
 
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import InternalServerError from "../../errors/classes/InternalServerError";
-import { IError } from "../auth.interface";
-import { ValidationError } from "../../errors/classes/ValidationError";
-import { NotFoundError } from "../../errors/classes/NotFoundError";
-import { UnauthorizedError } from "../../errors/classes/UnauthorizedError";
+import { IError } from "../error.interface";
+import InternalServerError from "../classes/InternalServerError";
+import ValidationError from "../classes/ValidationError";
+import NotFoundError from "../classes/NotFoundError";
+import UnauthorizedError from "../classes/UnauthorizedError";
 
 const handleErrors = async(error: any ,req: Request, res: Response, next: NextFunction) => {
 
@@ -32,6 +32,7 @@ const handleErrors = async(error: any ,req: Request, res: Response, next: NextFu
     if (error instanceof ValidationError) {
         customError.statusCode = error.statusCode;
         customError.message = error.message;
+        customError.data = error.data;
     }
 
     // handle custom validation errors

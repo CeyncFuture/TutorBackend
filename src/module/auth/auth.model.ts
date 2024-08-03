@@ -17,6 +17,10 @@ const AuthSchema = (sequelize: Sequelize) => {
             autoIncrement: true,
             primaryKey: true,
           },
+          role_id: {
+            type: DataTypes.STRING,
+            allowNull: true,
+          },
           email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -26,6 +30,10 @@ const AuthSchema = (sequelize: Sequelize) => {
             type: DataTypes.STRING,
             allowNull: true,
           },
+          is_verified: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+          }
         },
         {
           sequelize,

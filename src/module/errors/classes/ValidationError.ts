@@ -1,16 +1,28 @@
 /**
  * author Thilina Pahalagedara
- * created on 24-07-2024-19h-45m
+ * created on 03-08-2024-15h-00m
  * github: https://github.com/Pahalagedara
  * copyright 2024
-*/
+**/
 
-import { StatusCodes } from 'http-status-codes';
-import { AppError } from './AppError';
+import { IStringDictionary } from "../error.interface";
+import AppError from "./AppError";
+import { StatusCodes } from "http-status-codes";
 
-// Represents an error when input validation fails.
-export class ValidationError extends AppError {
-  constructor(message?: string ) {
-    super(message || "Validation failed", StatusCodes.BAD_REQUEST);
-  }
+export type TKeyValuePair = Array<{ key: string; message: string | number }>;
+
+class DataValidationError extends AppError {
+
+    constructor(keyValuePairs: TKeyValuePair) {
+        
+        let validatorKeyValuePairs: IStringDictionary = {};
+
+        for (const errorPair of keyValuePairs) {
+            validatorKeyValuePairs[errorPair.key] = errorPair.message;
+        }
+
+        super("Data validation error", StatusCodes.BAD_REQUEST, validatorKeyValuePairs);
+    }
 }
+
+export default DataValidationError;

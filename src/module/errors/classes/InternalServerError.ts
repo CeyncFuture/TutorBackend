@@ -6,10 +6,12 @@
 */
 
 import { StatusCodes } from "http-status-codes";
-import { AppError } from "./AppError";
+import AppError from "./AppError";
 
-export default class InternalServerError extends AppError{
-    constructor(message?: string){
-        super(message || "Internal Server Error", StatusCodes.INTERNAL_SERVER_ERROR);
+class InternalServerError extends AppError{
+    constructor(message: string){
+        super(message, StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
+
+export default InternalServerError;
