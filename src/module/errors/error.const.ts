@@ -12,7 +12,9 @@ export const errorMessages = {
         WRONG_PASSWORD: "Incorrect email or password. Please check your details and try again!"
     },
     UNAUTHORIZED: {
-        DEFAULT: "Invalid password!"
+        DEFAULT: "Invalid password!",
+        AUTH_HEADER_NOT_EXIST: "Authorization header is required!",
+        AUTH_TOKEN_NOT_EXIST: "Authorization token is missing from the header!",
     },
     NOT_FOUND: {
         DEFAULT: "User not found!"
@@ -25,6 +27,9 @@ export const errorMessages = {
     },
     NOT_ACCEPTABLE: {
         DEFAULT: "Invalid request!"
+    },
+    FORBIDDEN: {
+        NOT_AUTHORIZED_ROLE: "You are not authorized to this resources!",
     },
     VALIDATION: {
         EMAIL_R: {

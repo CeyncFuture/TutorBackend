@@ -15,7 +15,10 @@ const save = async (authModel: IAuthModel, transaction?: Transaction) => {
 
 const findByEmail = async(email: string) => {
     return Auth.findOne({
-        where: { email }
+        where: { email },
+        include: [
+            {model: User}
+        ]
     });
 }
 
