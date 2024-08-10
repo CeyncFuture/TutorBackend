@@ -5,6 +5,7 @@
  * copyright 2024
  */
 import 'express-async-errors';
+import './config/globalTypes/express.interface';
 import express from "express";
 import cors from "cors";
 import { constants } from "./constants";

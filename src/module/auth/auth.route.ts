@@ -6,9 +6,12 @@
 */
 
 import { Router } from "express";
-import AuthRegisterInputSanitizer from "./middlewares/authRegisterInputSanitizer";
+import { constants } from "../../constants";
 import AuthController from "./auth.controller";
+import AuthRegisterInputSanitizer from "./middlewares/authRegisterInputSanitizer";
 import AuthLoginInputSanitizer from "./middlewares/loginInputSanitizer";
+import AuthorizationHandler from "./middlewares/authorizationHandler";
+import OTPVerifyInputSanitizer from "./middlewares/otpVerifyInputSanitizer";
 
 const route = Router();
 
@@ -22,6 +25,24 @@ route.post(
     "/login",
     AuthLoginInputSanitizer,
     AuthController.userLogin
+)
+
+route.get(
+    "/logout",
+    AuthController.userLogout,
+)
+
+route.get(
+    "/otp",
+    AuthorizationHandler([constants.USER_ROLES.ALL]),
+    AuthController.getOTP,
+)
+
+route.post(
+    "/otp-verify",
+    AuthorizationHandler([constants.USER_ROLES.ALL]),
+    OTPVerifyInputSanitizer,
+    AuthController.verifyOTP,
 )
 
 export default route;

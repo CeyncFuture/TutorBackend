@@ -10,7 +10,6 @@ import DatabaseUtil from "../../../config/database/database.util";
 import AuthUtil from "../auth.util";
 import AuthService from "../auth.service";
 import { errorMessages } from "../../errors/error.const";
-import BadRequestError from "../../errors/classes/BadRequestError";
 import UserService from "../../user/user.service";
 import { IUser } from "../../user/user.interface";
 import ConflictError from "../../errors/classes/ConflictError";
@@ -19,9 +18,9 @@ import { constants } from "../../../constants";
 
 
 const register = async ( sanitizedInputs: IAuthRegisterSanitizedInputs ) => {
-
     //Check is email already exist.
     const dbExistAuth = await AuthService.findByEmail(sanitizedInputs.email);
+    
     if (dbExistAuth)
         throw new ConflictError(errorMessages.CONFLICT.EMAIL_EXISTS);
     

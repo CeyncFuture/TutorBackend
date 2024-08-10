@@ -10,4 +10,7 @@ export const successMessages = {
     USER_UPDATE: "User updated successfully!",
     USER_DELETION: "User deleted successfully!",
     USER_LOGIN: "User logged in successfully!",
+    USER_LOGOUT: "User logged out successfully!",
+    OTP_SENDED: "Please check your mailbox!",
+    OTP_VERIFIED: "OTP verified successfully!",
 };

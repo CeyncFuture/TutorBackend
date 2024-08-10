@@ -17,7 +17,8 @@ export const errorMessages = {
         AUTH_TOKEN_NOT_EXIST: "Authorization token is missing from the header!",
     },
     NOT_FOUND: {
-        DEFAULT: "User not found!"
+        USER_NOT_EXIST: "User not found!",
+        PENDING_USER_NOT_EXIST: "No pending verification request found for this user!"
     },
     INTERNAL_SERVER_ERROR: {
         DEFAULT: "Internal server error!"
@@ -30,6 +31,8 @@ export const errorMessages = {
     },
     FORBIDDEN: {
         NOT_AUTHORIZED_ROLE: "You are not authorized to this resources!",
+        INVALID_OTP: "OTP is not valid!",
+        EXPIRED_OTP: "OTP is expired!",
     },
     VALIDATION: {
         EMAIL_R: {
@@ -54,6 +57,10 @@ export const errorMessages = {
         },
         PHONE_NUMBER: {
             "string.empty": "Phone number can not be empty!",
+        },
+        OTP_R: {
+            "any.required": "OTP is required!",
+            "string.empty": "OTP can not be empty!",
         }
     }
 }
