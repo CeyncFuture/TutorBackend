@@ -36,6 +36,7 @@ export const constants = {
             USER: "user",
             STUDENT: "student",
             TUTOR: "tutor",
+            PENDING_USER: "pending_user",
         },
         TABLE_NAMES: {
             AUTHS: "auths",
@@ -43,6 +44,7 @@ export const constants = {
             USERS: "users",
             STUDENTS: "students",
             TUTORS: "tutors",
+            PENDING_USERS: "pending_users"
         },
         DB_HOST: process.env.DB_HOST,
         DB_PORT: process.env.DB_PORT,
@@ -68,7 +70,9 @@ export const constants = {
             },
             SECRET_KEY: process.env.SECRET_KEY || "default-secret-key",
         },
-        COOLDOWN_TIME: 60, //second
+        COOLDOWN_TIME: 60, //1 min
+        BLOCKED_COOL_DOWN_TIME: 3 * 60 * 60, //3 hour
+        VALID_TIME: 30 * 60, //30 minute
         MAXIMUM_RETRY: 3, // Maximum number of retry attempts
         PASSWORD_SALT_ROUND: process.env.PASSWORD_SALT_ROUND || 10,
 

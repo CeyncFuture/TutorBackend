@@ -10,19 +10,24 @@ import { Auth, IAuthModel } from "./auth.interface";
 import { User } from "../user/user.interface";
 
 const save = async (authModel: IAuthModel, transaction?: Transaction) => {
-    return Auth.create(authModel, {transaction});
+    return await Auth.create(authModel, {transaction});
+}
+
+const findByPk = async (authId: number) => {
+    return await Auth.findByPk(authId)
 }
 
 const findByEmail = async(email: string) => {
-    return Auth.findOne({
+    return await Auth.findOne({
         where: { email },
         include: [
-            {model: User}
+            { model: User }
         ]
     });
 }
 
 export default {
     save,
+    findByPk,
     findByEmail,
 }

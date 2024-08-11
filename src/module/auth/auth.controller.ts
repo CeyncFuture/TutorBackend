@@ -8,9 +8,10 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { successMessages } from "./auth.const";
-import { IAuthRegisterSanitizedInputs, ILoginSanitizedInputs } from "./auth.interface";
+import { IAuthRegisterSanitizedInputs, ICustomRequestAuth, ILoginSanitizedInputs, IOTPVerifySanitizeInputs } from "./auth.interface";
 import AuthRegister from "./controllers/authRegister";
 import loginHandler from "./controllers/loginHandler";
+import OTPHandler from "./controllers/otpHandler";
 
 
 const authRegister = async( req: Request, res: Response ) => {    
@@ -35,10 +36,39 @@ const userLogin = async( req: Request, res: Response ) => {
             user: token.user
         }
     })
-}
+};
+
+const userLogout = async( req: Request, res: Response ) => {  
+
+    return res.status(StatusCodes.OK).json({
+        message: successMessages.USER_LOGOUT,
+    })
+};
+
+const getOTP = async( req: Request, res: Response ) => {
+    const { userId } = req.auth as ICustomRequestAuth;
+
+    await OTPHandler.requestOTP(userId);
+    return res.status(StatusCodes.OK).json({
+        message: successMessages.OTP_SENDED,
+    })
+};
+
+const verifyOTP = async( req: Request, res: Response ) => {
+    const { userId } = req.auth as ICustomRequestAuth;
+    const sanitizedInputs = req.body as IOTPVerifySanitizeInputs;
+
+    await OTPHandler.verifyOTP(userId, sanitizedInputs.otp);
+    return res.status(StatusCodes.OK).json({
+        message: successMessages.OTP_VERIFIED,
+    })
+};
 
 
 export default {
     authRegister,
     userLogin,
+    userLogout,
+    getOTP,
+    verifyOTP,
 }

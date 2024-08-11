@@ -12,13 +12,18 @@ import AuthSchema from "../../module/auth/auth.model";
 import UserSchema from "../../module/user/user.model";
 import StudentSchema from "../../module/student/student.model";
 import TutorSchema from "../../module/tutor/tutor.model";
+import PendingUserSchema from "../../module/pendingUser/pendingUser.model";
 
 //import models
 import { Auth } from "../../module/auth/auth.interface";
 import { User } from "../../module/user/user.interface";
 import { Student } from "../../module/student/student.interface";
 import { Tutor } from "../../module/tutor/tutor.interface";
+import { PendingUser } from "../../module/pendingUser/pendingUser.interface";
+
 import InternalServerError from "../../module/errors/classes/InternalServerError";
+
+
 
 let sequelizeInstance: Sequelize | null = null;
 
@@ -27,17 +32,39 @@ const modelDefiners: typeof AuthSchema[]  = [
     AuthSchema,
     UserSchema,
     StudentSchema,
-    TutorSchema
+    TutorSchema,
+    PendingUserSchema,
 ];
 
 //Add relations 
-const initializeModelRelations = (sequelize: Sequelize) => {
-  Auth.hasOne(User);
-  User.belongsTo(Auth);
-  User.hasOne(Student);
-  Student.belongsTo(User);
-  User.hasOne(Tutor);
-  Tutor.belongsTo(User);
+const initializeModelRelations = () => {
+  Auth.hasOne(User,{
+    foreignKey: "auth_id",
+  });
+  User.belongsTo(Auth, {
+    foreignKey: "auth_id",
+  });
+
+  User.hasOne(Student,{
+    foreignKey: "user_id",
+  });
+  Student.belongsTo(User,{
+    foreignKey: "user_id",
+  });
+
+  User.hasOne(Tutor,{
+    foreignKey: "user_id",
+  });
+  Tutor.belongsTo(User,{
+    foreignKey: "user_id",
+  });
+
+  User.hasOne(PendingUser,{
+    foreignKey: "user_id",
+  });
+  PendingUser.belongsTo(User,{
+    foreignKey: "user_id",
+  });
 }
 
 const connectDB = async (connection: IDbConnection) => {
@@ -62,7 +89,7 @@ const connectDB = async (connection: IDbConnection) => {
     })
 
     //initiate model relations
-    initializeModelRelations(sequelize);
+    initializeModelRelations();
 
     await sequelize.sync();
 

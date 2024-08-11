@@ -57,6 +57,15 @@ interface IAuthResponse {
   }
 }
 
+interface ICustomRequestAuth {
+  role: string,
+  userId: number,
+}
+
+interface IOTPVerifySanitizeInputs {
+  otp: string;
+}
+
 export {
   Auth, 
   IAuth, 
@@ -65,4 +74,6 @@ export {
   IAuthRegisterSanitizedInputs,
   IAuthTokenBody,
   IAuthResponse,
+  ICustomRequestAuth,
+  IOTPVerifySanitizeInputs
 };

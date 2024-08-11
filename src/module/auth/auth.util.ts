@@ -75,9 +75,19 @@ const verifyToken = (token: string) => {
     }
   };
 
+function generateOTP(length: number = 6) {
+    let otp = '';
+    const digits = '0123456789';
+    for (let i = 0; i < length; i++) {
+        otp += digits.charAt(Math.floor(Math.random() * digits.length));
+    }
+    return otp;
+}
+
 export default {
     encryptString,
     compareStringWithHash,
     generateTokens,
     verifyToken,
+    generateOTP,
 }

@@ -11,8 +11,9 @@ import AuthUtil from "../auth.util";
 import UnAuthorizedError from "../../errors/classes/UnauthorizedError";
 import ForbiddenError from "../../errors/classes/ForbiddenError";
 import { errorMessages } from "../../errors/error.const";
+import { constants } from "../../../constants";
 
-const authorizationHandler = async (roles: string[]) => {
+const authorizationHandler = (roles: string[]) => {
     return async(req: Request, res: Response, next: NextFunction) => {
 
         // Extract the Bearer token from the Authorization header
@@ -28,11 +29,16 @@ const authorizationHandler = async (roles: string[]) => {
         }
 
         // Verify jwt
-        const userRole: IAuthTokenBody = AuthUtil.verifyToken(token);
-
+        const tokenData: IAuthTokenBody = AuthUtil.verifyToken(token);
+        
         // Check if the user role is allowed
-        if (!roles.includes(userRole.role)) {
+        if (!roles.includes(tokenData.role) || !roles.includes(constants.USER_ROLES.ALL)) {
             throw new ForbiddenError(errorMessages.FORBIDDEN.NOT_AUTHORIZED_ROLE);
+        }
+        
+        req.auth = {
+            userId: tokenData.user_id,
+            role: tokenData.role
         }
 
         // Proceed to the next middleware or route handler
