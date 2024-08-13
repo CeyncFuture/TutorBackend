@@ -57,11 +57,6 @@ interface IAuthTokenBody {
 interface IAuthResponse {
   access_token: string;
   refresh_token: string;
-  user: {
-    role: string;
-    name: string;
-    is_verified: boolean;
-  }
 }
 
 interface ICustomRequestAuth {

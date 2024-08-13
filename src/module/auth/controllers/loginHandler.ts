@@ -34,7 +34,11 @@ const login = async( sanitizedInputs: ILoginSanitizedInputs ) => {
         role: dbExistAuth.role_id,
     }
     
-    return AuthUtil.generateTokens(authTokenBodyParam, dbExistAuth, dbExistUser.first_name) as IAuthResponse;
+    return {
+        token: AuthUtil.generateTokens(authTokenBodyParam) as IAuthResponse,
+        user: dbExistUser,
+        auth: dbExistAuth
+    }
 
 }
 

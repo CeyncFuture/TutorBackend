@@ -23,7 +23,7 @@ const compareStringWithHash = async( payload: string, hash: string ): Promise<bo
 }
 
 //JWT functions
-const generateTokens = ( payload: IAuthTokenBody, auth: IAuth, name: string ): IAuthResponse => {
+const generateTokens = ( payload: IAuthTokenBody ): IAuthResponse => {
     
     //Create access token
     const access_token = jwt.sign(
@@ -54,11 +54,6 @@ const generateTokens = ( payload: IAuthTokenBody, auth: IAuth, name: string ): I
     const AuthResponse: IAuthResponse = {
         access_token,
         refresh_token,
-        user: {
-            role: auth.role_id,
-            name: name,
-            is_verified: auth.is_verified,
-        }
     }
 
     return AuthResponse;
