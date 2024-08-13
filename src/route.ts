@@ -9,6 +9,7 @@ import express from "express";
 
 //import routes
 import AuthRouter from "./module/auth/auth.route";
+import UserRouter from "./module/user/user.route";
 
 const router = express.Router();
 
@@ -17,5 +18,10 @@ router.use(
     "/auth",
     AuthRouter
 );
+
+router.use(
+    "/user",
+    UserRouter
+)
 
 export default router;

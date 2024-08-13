@@ -35,6 +35,10 @@ const UserSchema = async(sequelize: Sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            profile_picture: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
             country_code: {
                 type: DataTypes.STRING,
                 allowNull: true,

@@ -5,7 +5,8 @@
  * copyright 2024
  */
 
-import { Model, Optional } from "sequelize";
+import { Association, Model, Optional } from "sequelize";
+import { User } from "../user/user.interface";
 
 
 
@@ -25,6 +26,12 @@ class Auth extends Model<IAuth, IAuthModel> implements IAuth {
   public email!: string;
   public password!: string;
   public is_verified!: boolean;
+
+  // Define the association properties
+  public getUser!: () => Promise<User | null>;
+  public static associations: {
+    user: Association<Auth, User>;
+  };
 }
 
 interface ILoginSanitizedInputs {
