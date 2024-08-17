@@ -25,6 +25,7 @@ export const errorMessages = {
     },
     CONFLICT: {
         EMAIL_EXISTS: "Your email already exists!",
+        USER_EXISTS: "Your account is already created!"
     },
     NOT_ACCEPTABLE: {
         DEFAULT: "Invalid request!"
@@ -58,9 +59,50 @@ export const errorMessages = {
         PHONE_NUMBER: {
             "string.empty": "Phone number can not be empty!",
         },
+        PHONE_NUMBER_R: {
+            "string.empty": "Phone number can not be empty!",
+            'any.required': 'Phone number is required!',
+        },
+        ADDRESS_R: {
+            'string.empty': 'Address can not be empty!',
+            'any.required': 'Address number is required!',
+        },
+        DEGREE_R: {
+            'string.empty': 'Degree is required!',
+        },
+        HIGH_SCHOOL_R: {
+            'string.empty': 'High school can not be empty!',
+            "any:required": "High school is required!"
+        },
+        INTERESTS_R: {
+            'string.empty': 'Interests can not be empty!',
+            'array.base': 'Interests must be an array of strings!',
+            'array.includesRequiredUnknowns': 'Interests must include at least one string!',
+            "any:required": "Interests is required!"
+        },
+        IS_SEND_UNI_R: {
+            'boolean.base': 'Is Send University must be a boolean!',
+            "any:required": "Is Send University is required!"
+        },
+        EXP_EARNINGS_R: {
+            'number.base': 'Expected earnings must be a number!',
+            'number.positive': 'Expected earnings must be positive!',
+            "any.required": "Expected earnings can not be empty!'"
+        },
+        WORK_HOURS: {
+            'number.base': 'Work hours must be a number!',
+            'number.min': 'Work hours cannot be negative!',
+            'number.integer': 'Work hours must be an integer!',
+            "any:required": "Work hours is required!"
+        },
         OTP_R: {
             "any.required": "OTP is required!",
             "string.empty": "OTP can not be empty!",
+        },
+        ROLE_R: {
+            "any.required": "Role is required!",
+            "string.empty": "Role can not be empty!",
+            'any.only': 'Role must be one of student, or tutor',
         }
     }
 }

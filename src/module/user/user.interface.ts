@@ -16,9 +16,10 @@ interface IUser {
     profile_picture?:string;
     country_code?: string;
     phone_number?: string;
+    address?: string;
 }
 
-interface IUserModel extends Optional <IUser, "id" | "country_code" | "phone_number"> {}
+interface IUserModel extends Optional <IUser, "id" | "country_code" | "phone_number" | "address"> {}
 
 class User extends Model<IUser, IUserModel> implements IUser {
     public id!: number;
@@ -28,6 +29,7 @@ class User extends Model<IUser, IUserModel> implements IUser {
     public profile_picture?: string;
     public country_code?: string;
     public phone_number?: string;
+    public address?: string;
 
     // Define the association properties
     public getAuth!: () => Promise<Auth | null>;
@@ -36,17 +38,21 @@ class User extends Model<IUser, IUserModel> implements IUser {
     };
 } 
 
-interface IUserSanitizedInput{
-    first_name: string;
-    last_name: string;
-    profile_picture?: string;
-    country_code?: string;
-    phone_number?: string;
+interface IUserMutationSanitizedInput {
+    role: string;
+    phone_number: string;
+    address: string;
+    degree: string;
+    exp_earnings: number;
+    high_school: string;
+    interests: string[];
+    is_send_uni: boolean;
+    work_hours: number;
 }
 
 export {
     User,
     IUser,
     IUserModel,
-    IUserSanitizedInput,
+    IUserMutationSanitizedInput
 }

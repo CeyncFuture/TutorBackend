@@ -30,9 +30,10 @@ const authorizationHandler = (roles: string[]) => {
 
         // Verify jwt
         const tokenData: IAuthTokenBody = AuthUtil.verifyToken(token);
+        console.log(roles);
         
         // Check if the user role is allowed
-        if (!roles.includes(tokenData.role) || !roles.includes(constants.USER_ROLES.ALL)) {
+        if (!roles.includes(tokenData.role) && !roles.includes(constants.USER_ROLES.ALL)) {
             throw new ForbiddenError(errorMessages.FORBIDDEN.NOT_AUTHORIZED_ROLE);
         }
         

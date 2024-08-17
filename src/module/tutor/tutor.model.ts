@@ -18,10 +18,6 @@ const TutorSchema = async(sequelize: Sequelize) => {
                 allowNull: false,
                 primaryKey: true,
             },
-            description: {
-                type: DataTypes.STRING,
-                allowNull: true,
-            },
             user_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -30,7 +26,25 @@ const TutorSchema = async(sequelize: Sequelize) => {
                     key: "id",
                 },
                 onDelete: "CASCADE"
-            }
+            },
+            degree: {
+                type: DataTypes.STRING,
+            },
+            exp_earnings: {
+                type: DataTypes.INTEGER,
+            },
+            high_school: {
+                type: DataTypes.STRING,
+            },
+            interests: {
+                type: DataTypes.STRING, //TODO should be change to get from an other table;
+            },
+            is_send_uni: {
+                type: DataTypes.BOOLEAN,
+            },
+            work_hours: {
+                type: DataTypes.INTEGER,
+            },
         },
         {
             sequelize,

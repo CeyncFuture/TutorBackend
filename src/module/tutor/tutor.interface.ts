@@ -8,26 +8,32 @@
 import { Model, Optional } from "sequelize";
 
 interface ITutor {
-    id: number;
-    description?: string;
-    user_id: number;
+    id?: number;
+    user_id?: number;
+    degree: string;
+    exp_earnings: number;
+    high_school: string;
+    interests: string;
+    is_send_uni: boolean;
+    work_hours: number;
 }
 
-interface ITutorModel extends Optional <ITutor, "id" | "description"> {}
+interface ITutorModel extends Optional <ITutor, "id" > {}
 
 class Tutor extends Model<ITutor, ITutorModel> implements ITutor {
     public id!: number;
-    public description!: string;
     public user_id!: number;
+    public degree!: string;
+    public exp_earnings!: number;
+    public high_school!: string;
+    public interests!: string;
+    public is_send_uni!: boolean;
+    public work_hours!: number;
 } 
 
-interface ITutorInputSanitizer {
-    description?: string;
-}
 
 export {
     ITutor,
     ITutorModel,
-    ITutorInputSanitizer,
     Tutor
 }
