@@ -32,7 +32,7 @@ route.get(
     AuthController.userLogout,
 )
 
-route.get(
+route.post(
     "/otp",
     AuthorizationHandler([constants.USER_ROLES.ALL]),
     AuthController.getOTP,

@@ -8,10 +8,12 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { IError } from "../error.interface";
+// import { EmailSyntaxError, } from "nodemailer";
 import InternalServerError from "../classes/InternalServerError";
 import ValidationError from "../classes/ValidationError";
 import NotFoundError from "../classes/NotFoundError";
 import UnauthorizedError from "../classes/UnauthorizedError";
+import NodeMailerError from "../classes/NodemailerError";
 
 const handleErrors = async(error: any ,req: Request, res: Response, next: NextFunction) => {
 
@@ -47,6 +49,16 @@ const handleErrors = async(error: any ,req: Request, res: Response, next: NextFu
         customError.message = error.message;
     }
 
+    // handle email send
+    if (error instanceof NodeMailerError) {
+        customError.statusCode = error.statusCode;
+        if(error.response === "501 Error: Bad sender address syntax"){
+            customError.message = "Invalid Email Address!"
+        }else{
+            customError.message = "Something went wrong in email sending!";
+        }
+    }
+    
     return res
             .status(customError.statusCode)
             .json({

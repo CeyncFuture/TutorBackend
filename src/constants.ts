@@ -93,4 +93,14 @@ export const constants = {
         ALL: "all",
     },
 
+    //Email
+    EMAIL: {
+        HOST: process.env.EMAIL_HOST,
+        PORT: parseInt(process.env.EMAIL_PORT || "") || 587,
+        SSL: process.env.EMAIL_SSL,
+        USER: process.env.EMAIL_USER,
+        PASS: process.env.EMAIL_PASS,
+        SENDER_IDENTITY: process.env.SENDER_IDENTITY,
+    },
+
 };

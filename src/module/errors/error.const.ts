@@ -34,6 +34,9 @@ export const errorMessages = {
         NOT_AUTHORIZED_ROLE: "You are not authorized to this resources!",
         INVALID_OTP: "OTP is not valid!",
         EXPIRED_OTP: "OTP is expired!",
+        USER_ALREADY_VERIFIED: "Your account already verified!",
+        COOL_DOWN_OTP_REQUEST: "Please wait before making another attempt!",
+        TEMPORARILY_BLOCKED_OTP_REQUEST: "You have exceeded the retry count. Please try again later!"
     },
     VALIDATION: {
         EMAIL_R: {
