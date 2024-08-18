@@ -50,7 +50,7 @@ const requestOTP = async (userId: number) => {
     const now = Date.now();
     const requestedAt = new Date(dbPendingUser.requested_at).getTime();
     const timeGap = (now - requestedAt)/1000;
-    console.log(timeGap, '-- time gap')
+
     // Check if the cooldown period has passed
     if (timeGap < constants.SESSIONS.COOLDOWN_TIME) {
         throw new ForbiddenError(errorMessages.FORBIDDEN.COOL_DOWN_OTP_REQUEST);
