@@ -29,27 +29,51 @@ const TutorSchema = async(sequelize: Sequelize) => {
             },
             degree: {
                 type: DataTypes.STRING,
+                allowNull: false,
             },
-            exp_earnings: {
+            expected_earnings: {
                 type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            highest_education_qualification: {
+                type: DataTypes.STRING,
+                allowNull: false,
             },
             high_school: {
                 type: DataTypes.STRING,
+                allowNull: false,
             },
             interests: {
-                type: DataTypes.STRING, //TODO should be change to get from an other table;
+                type: DataTypes.STRING, // Adjust if you want to handle this with a separate table
+                allowNull: false,
             },
             is_send_uni: {
                 type: DataTypes.BOOLEAN,
+                allowNull: false,
             },
             work_hours: {
                 type: DataTypes.INTEGER,
+                allowNull: false,
             },
+            device: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            employment: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            previous_experience: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            }
         },
         {
             sequelize,
             modelName: constants.DATABASE.MODEL_NAMES.TUTOR,
             tableName: constants.DATABASE.TABLE_NAMES.TUTORS,
+            timestamps: true,
+            underscored: true,
         }
     );
 
