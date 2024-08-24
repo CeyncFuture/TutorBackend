@@ -27,13 +27,24 @@ const authRegister = async( req: Request, res: Response ) => {
 const userLogin = async( req: Request, res: Response ) => {  
     const sanitizedInputs = req.body as ILoginSanitizedInputs;
 
-    const token = await loginHandler.login(sanitizedInputs);
+    const response = await loginHandler.login(sanitizedInputs);
+
     return res.status(StatusCodes.OK).json({
         message: successMessages.USER_LOGIN,
         payload: {
-            access_token: token.access_token,
-            refresh_token: token.refresh_token,
-            user: token.user
+            access_token: response.token.access_token,
+            refresh_token: response.token.refresh_token,
+            user: {
+                user_id: response?.user?.id,
+                first_name: response?.user?.first_name,
+                last_name: response?.user?.last_name,
+                user_role: response?.auth?.role_id,
+                email: response?.auth?.email,
+                phone_number: response?.user?.phone_number,
+                profile_picture: response?.user?.profile_picture,
+                is_verified: response?.auth?.is_verified,
+                is_logged_in: true,
+            },
         }
     })
 };

@@ -6,5 +6,5 @@
 */
 
 export const corsConfig = {
-    origin: '', // Allow requests from this origin
+    origin: '*', // Allow requests from this origin
 };

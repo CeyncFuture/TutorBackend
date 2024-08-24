@@ -23,7 +23,7 @@ const UserSchema = async(sequelize: Sequelize) => {
                 allowNull: false,
                 references: {
                     model: constants.DATABASE.TABLE_NAMES.AUTHS,
-                    key: "id"
+                    key: "id",
                 },
                 onDelete: "CASCADE"
             },
@@ -35,6 +35,10 @@ const UserSchema = async(sequelize: Sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            profile_picture: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
             country_code: {
                 type: DataTypes.STRING,
                 allowNull: true,
@@ -42,6 +46,10 @@ const UserSchema = async(sequelize: Sequelize) => {
             phone_number: {
                 type: DataTypes.STRING,
                 allowNull: true
+            },
+            address: {
+                type: DataTypes.STRING,
+                allowNull: true,
             },
         },
         {

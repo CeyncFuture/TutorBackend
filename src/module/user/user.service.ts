@@ -7,6 +7,8 @@
 
 import { Transaction } from "sequelize";
 import { IUserModel, User } from "./user.interface";
+import { Auth } from "../auth/auth.interface";
+import { Tutor } from "../tutor/tutor.interface";
 
 const save = async( userModel: IUserModel, transaction?: Transaction ) => {
    return await User.create(userModel,{transaction});
@@ -19,11 +21,31 @@ const findByAuthId = async( auth_id: number ) => {
 }
 
 const findByPk = async( userId: number ) => {
-    return await User.findByPk(userId);
+    return await User.findByPk(userId,{
+        include: [
+            { 
+                model: Auth,
+                required: true,
+            }
+        ]
+    });
 }
+
+const findById = async( userId: number ) => {
+    return await User.findOne({
+        where: {id: userId},
+        include: [
+            {
+                model: Auth,
+                required: true,
+            },
+        ]
+    });
+};
 
 export default {
     save,
     findByAuthId,
     findByPk,
+    findById,
 }
