@@ -13,13 +13,7 @@ const save = async( pendingUserModel: IPendingUserModel, transaction?: Transacti
 }
 
 const findByUserId = async( userId: number ) => {
-    try{
-        return await PendingUser.findOne({where: {user_id: userId}});
-    }catch(e){
-        console.log(e, ' +ssssssssssssssssssss');
-        throw e
-    }
-    // return PendingUser.findOne({ where: { user_id: userId } });
+    return PendingUser.findOne({ where: { user_id: userId } });
 }
 
 export default {

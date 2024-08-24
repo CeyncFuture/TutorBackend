@@ -43,11 +43,16 @@ interface IUserMutationSanitizedInput {
     phone_number: string;
     address: string;
     degree: string;
-    exp_earnings: number;
     high_school: string;
     interests: string[];
     is_send_uni: boolean;
     work_hours: number;
+    highest_education_qualification: string;
+    device: string;
+    employment: string;
+    previous_experience: string;
+    expected_earnings: number;
+    highest_degree: string;
 }
 
 export {

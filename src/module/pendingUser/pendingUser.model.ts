@@ -47,7 +47,8 @@ const pendingUserSchema = (sequelize: Sequelize) => {
             sequelize,
             tableName: constants.DATABASE.TABLE_NAMES.PENDING_USERS,
             modelName: constants.DATABASE.TABLE_NAMES.PENDING_USERS,
-            timestamps: true
+            timestamps: true,
+            underscored: true,
         }
     );
 

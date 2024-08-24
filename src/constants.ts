@@ -37,6 +37,9 @@ export const constants = {
             STUDENT: "student",
             TUTOR: "tutor",
             PENDING_USER: "pending_user",
+            SUBJECT: "subject",
+            SUBJECT_CATEGORY: "subject_category",
+            SUBJECT_TUTOR: "subject_tutor",
         },
         TABLE_NAMES: {
             AUTHS: "auths",
@@ -44,7 +47,10 @@ export const constants = {
             USERS: "users",
             STUDENTS: "students",
             TUTORS: "tutors",
-            PENDING_USERS: "pending_users"
+            PENDING_USERS: "pending_users",
+            SUBJECTS: "subjects",
+            SUBJECT_CATEGORIES: "subject_categories",
+            SUBJECTS_TUTORS: "subjects_tutors",
         },
         DB_HOST: process.env.DB_HOST,
         DB_PORT: process.env.DB_PORT,

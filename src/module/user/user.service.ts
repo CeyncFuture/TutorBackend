@@ -8,7 +8,6 @@
 import { Transaction } from "sequelize";
 import { IUserModel, User } from "./user.interface";
 import { Auth } from "../auth/auth.interface";
-import { Tutor } from "../tutor/tutor.interface";
 
 const save = async( userModel: IUserModel, transaction?: Transaction ) => {
    return await User.create(userModel,{transaction});
