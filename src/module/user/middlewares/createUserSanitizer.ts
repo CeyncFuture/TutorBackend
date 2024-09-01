@@ -42,7 +42,7 @@ const createUserSanitizer = (req: Request, res: Response, next: NextFunction ) =
         }),
         interests: Joi.when('role', {
             is: constants.USER_ROLES.TUTOR,
-            then: Joi.array().items(Joi.string()).required().messages(errorMessages.VALIDATION.INTERESTS_R),
+            then: Joi.array().items(Joi.number()).required().messages(errorMessages.VALIDATION.INTERESTS_R),
             otherwise: Joi.array()
         }),
         device: Joi.when('role', {

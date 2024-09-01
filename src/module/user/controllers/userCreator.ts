@@ -36,15 +36,17 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
     }
 
     dbExistAuth.role_id = sanitizedInputs.role;
+
+    //Check is user already registered
+    const dbExistTutor = await TutorService.findByUserId(dbExistUser.id);
+    const dbExistStudent = await StudentService.findByUserId(dbExistUser.id);
+
+    if(dbExistTutor || dbExistStudent){
+        throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
+    }
     
     //Do unique changes for every roles
     if( sanitizedInputs.role === constants.USER_ROLES.TUTOR) {
-
-        const dbExistTutor = await TutorService.findByUserId(dbExistUser.id);
-
-        if(dbExistTutor){
-            throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
-        }
 
         let tutor: ITutor = {
             ...sanitizedInputs,
@@ -80,12 +82,6 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
 
     //Student business logic
     else if( sanitizedInputs.role === constants.USER_ROLES.STUDENT) {
-
-        const dbExistStudent = await StudentService.findByUserId(dbExistUser.id);
-
-        if(dbExistStudent){
-            throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
-        }
         
         const student: IStudent = sanitizedInputs as IStudent;
 
