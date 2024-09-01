@@ -37,11 +37,12 @@ const getUser = async( req: Request, res: Response ) => {
             university: response.tutor?.university,
             previous_experience: response.tutor?.previous_experience,
             exp_confirmation: response.tutor?.exp_confirmation,
-            interests: response.tutor?.interests,
+            interests: response.subjects,
             device: response.tutor?.device,
             employment: response.tutor?.employment,
             work_hours: response.tutor?.work_hours,
             expected_earnings: response.tutor?.expected_earnings,
+            subjects: response.subjects,
             is_logged_in: true,
         }
     })

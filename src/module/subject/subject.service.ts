@@ -7,16 +7,17 @@
 
 import { Transaction } from "sequelize";
 import { ISubjectCategoryModel, ISubjectModel, Subject, SubjectCategory } from "./subject.interface";
+import { Tutor } from "../tutor/tutor.interface";
 
-const saveSubject = (subject: ISubjectModel, transaction?: Transaction) => {
+const saveSubject = async(subject: ISubjectModel, transaction?: Transaction) => {
     return Subject.create(subject, {transaction});
 }
 
-const saveCategory = (category: ISubjectCategoryModel, transaction?: Transaction) => {
+const saveCategory = async(category: ISubjectCategoryModel, transaction?: Transaction) => {
     return SubjectCategory.create(category, {transaction});
 }
 
-const findAll = () => {
+const findAll = async() => {
     return Subject.findAll({
         attributes: ["id","name"],
         include: [
@@ -29,7 +30,25 @@ const findAll = () => {
     });
 }
 
-const findCategoryByName = (name: string) => {
+const findAllWithTutor = async(tutorId?: number) => {
+    return await Subject.findAll({
+        attributes: ["id","name"],
+        include: [
+            {
+                model: SubjectCategory,
+                required: true,
+                attributes: ["name"]
+            },
+            {
+                model: Tutor,
+                attributes: ["id"],
+                ... tutorId && {where: { id: tutorId }}
+            }
+        ]
+    })
+}
+
+const findCategoryByName = async(name: string) => {
     return SubjectCategory.findOne({where: {name}});
 }
 
@@ -38,4 +57,5 @@ export default {
     saveCategory,
     findAll,
     findCategoryByName,
+    findAllWithTutor,
 }

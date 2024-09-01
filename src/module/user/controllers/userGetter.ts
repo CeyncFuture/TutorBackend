@@ -7,6 +7,8 @@
 
 import NotFoundError from "../../errors/classes/NotFoundError";
 import { errorMessages } from "../../errors/error.const";
+import subjectService from "../../subject/subject.service";
+import { Tutor } from "../../tutor/tutor.interface";
 import UserService from "../user.service"
 
 const getUserData = async( userId: number ) => {
@@ -20,12 +22,14 @@ const getUserData = async( userId: number ) => {
     if(!auth)
         throw new NotFoundError(errorMessages.NOT_FOUND.USER_NOT_EXIST);
 
-    const tutor = await user.getTutor();
+    const tutor: Tutor = await user.getTutor() as Tutor;
+    const subjects = tutor && await subjectService.findAllWithTutor(tutor.id);
 
     return { 
         user, 
         auth,
-        tutor
+        tutor,
+        subjects
     };
 }
 

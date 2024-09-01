@@ -9,13 +9,16 @@ import { errorMessages } from "../../errors/error.const";
 import { constants } from "../../../constants";
 import { ITutor } from "../../tutor/tutor.interface";
 import { IUserMutationSanitizedInput } from "../user.interface"
+import { IStudent } from "../../student/student.interface";
+import { ISubjectTutor } from "../../joinTables/subjectsTutors/subjectsTutors.interface";
 import DatabaseUtil from "../../../config/database/database.util";
 import TutorService from "../../tutor/tutor.service";
 import userService from "../user.service"
 import NotFoundError from "../../errors/classes/NotFoundError";
 import ConflictError from "../../errors/classes/ConflictError";
 import StudentService from "../../student/student.service";
-import { IStudent } from "../../student/student.interface";
+
+import SubjectsTutorsService from "../../joinTables/subjectsTutors/subjectsTutors.service";
 
 const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitizedInput ) => {
     //get exist user table records
@@ -48,6 +51,22 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
     //Do unique changes for every roles
     if( sanitizedInputs.role === constants.USER_ROLES.TUTOR) {
 
+        if( !Array.isArray(sanitizedInputs.interests) || sanitizedInputs.interests?.length < 0 )
+            throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
+
+        const subjectsTutors: ISubjectTutor[] = (await Promise.all(
+            sanitizedInputs.interests.map(async (item) => {
+                const exists = await SubjectsTutorsService.findBySubjectId(item);
+                if (exists) {
+                    return {
+                        subject_id: item,
+                        tutor_id: dbExistUser.id,
+                    };
+                }
+                return null; // Return null for non-existing subjects
+            })
+        )).filter(Boolean) as ISubjectTutor[];
+
         let tutor: ITutor = {
             ...sanitizedInputs,
             interests: JSON.stringify(sanitizedInputs.interests)
@@ -67,12 +86,15 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
             //save tutor table records
             const dbTutor = await TutorService.save(tutor, transaction);
 
+            const dbSubjects = await SubjectsTutorsService.bulkSave(subjectsTutors, transaction)
+
             await transaction.commit();
 
             return {
                 user: dbExistUser,
                 auth: dbExistAuth,
                 tutor: dbTutor,
+                subjects: dbSubjects
             }
         }catch(err){
             await transaction.rollback();

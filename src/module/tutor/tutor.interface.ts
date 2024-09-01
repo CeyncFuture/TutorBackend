@@ -5,7 +5,8 @@
  * copyright 2024
 */
 
-import { Model, Optional } from "sequelize";
+import { Model, Optional, Association } from "sequelize";
+import { Subject } from "../subject/subject.interface";
 
 interface ITutor {
     id?: number;
@@ -39,6 +40,12 @@ class Tutor extends Model<ITutor, ITutorModel> implements ITutor {
     public employment!: string;
     public work_hours!: number;
     public expected_earnings!: number;
+
+    public getSubjects!: () => Promise<Subject[]>;
+
+    public static associations: {
+        subject: Association<Tutor, Subject>;
+    };
 }
 
 

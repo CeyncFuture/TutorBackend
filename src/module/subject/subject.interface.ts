@@ -5,7 +5,7 @@
  * copyright 2024
 */
 
-import { Model, Optional } from "sequelize";
+import { Model, Optional, Association } from "sequelize";
 
 interface ISubject {
     id?: number;
@@ -19,6 +19,12 @@ class Subject extends Model <ISubjectModel, ISubject> implements ISubject {
     public id!: number;
     public category_id!: number;
     public name!: string;
+
+    public getCategory!: () => Promise<SubjectCategory>;
+
+    public static associations: {
+      category: Association<Subject, SubjectCategory>;
+    };
 }
 
 interface ISubjectCategory {

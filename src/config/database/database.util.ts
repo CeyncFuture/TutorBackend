@@ -26,6 +26,7 @@ import { Subject, SubjectCategory } from "../../module/subject/subject.interface
 import { SubjectTutor } from "../../module/joinTables/subjectsTutors/subjectsTutors.interface";
 
 import InternalServerError from "../../module/errors/classes/InternalServerError";
+import { constants } from "../../constants";
 
 
 
@@ -81,19 +82,16 @@ const initializeModelRelations = () => {
   Subject.belongsTo(SubjectCategory,{
     foreignKey: "category_id",
   });
-  SubjectTutor.belongsTo(Subject,{
-    foreignKey: "subject_id",
-  });
-  Subject.hasMany(SubjectTutor,{
-    foreignKey: "subject_id",
-  });
 
   //Tutor relations
-  Tutor.hasMany(SubjectTutor,{
-    foreignKey: "tutor_id",
+  Tutor.belongsToMany(Subject, {
+    through: constants.DATABASE.TABLE_NAMES.SUBJECTS_TUTORS, 
+    foreignKey: 'tutor_id',
+    as: 'subjects',
   });
-  SubjectTutor.belongsTo(Tutor,{
-    foreignKey: "tutor_id",
+  Subject.belongsToMany(Tutor, { 
+    through: constants.DATABASE.TABLE_NAMES.SUBJECTS_TUTORS, 
+    foreignKey: 'subject_id' 
   });
 
 }
@@ -108,7 +106,9 @@ const connectDB = async (connection: IDbConnection) => {
         host: connection.host,
         port: connection.port,
         dialect: "mysql",
-        // logging: console.log,
+        define: {
+          underscored: true, // Use snake_case globally
+        },
       }
     );
 
