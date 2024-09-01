@@ -14,6 +14,8 @@ import TutorService from "../../tutor/tutor.service";
 import userService from "../user.service"
 import NotFoundError from "../../errors/classes/NotFoundError";
 import ConflictError from "../../errors/classes/ConflictError";
+import StudentService from "../../student/student.service";
+import { IStudent } from "../../student/student.interface";
 
 const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitizedInput ) => {
     //get exist user table records
@@ -75,10 +77,44 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
             throw err;
         }
     }
+
+    //Student business logic
     else if( sanitizedInputs.role === constants.USER_ROLES.STUDENT) {
-        return {
-            user: dbExistUser,
+
+        const dbExistStudent = await StudentService.findByUserId(dbExistUser.id);
+
+        if(dbExistStudent){
+            throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
         }
+        
+        const student: IStudent = sanitizedInputs as IStudent;
+
+        student.user_id = dbExistUser.id;
+
+        //Get transaction instance for roll back the db saving.
+        const sequelizeInstance = DatabaseUtil.getSequelizeInstance();
+        const transaction = await sequelizeInstance.transaction();
+    
+        try{
+            //save user table records
+            await dbExistUser.save({transaction});
+            //save auth table records
+            await dbExistAuth.save({transaction});
+            //save tutor table records
+            const dbStudent = await StudentService.save(student, transaction);
+
+            await transaction.commit();
+
+            return {
+            user: dbExistUser,
+            auth: dbExistAuth,
+            student: dbStudent,
+        }
+        }catch(err){
+            await transaction.rollback();
+            throw err;
+        }
+
     }
 
     return {};

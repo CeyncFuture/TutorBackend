@@ -27,14 +27,6 @@ const TutorSchema = async(sequelize: Sequelize) => {
                 },
                 onDelete: "CASCADE"
             },
-            degree: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            expected_earnings: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
             highest_education_qualification: {
                 type: DataTypes.STRING,
                 allowNull: false,
@@ -43,16 +35,24 @@ const TutorSchema = async(sequelize: Sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            interests: {
-                type: DataTypes.STRING, // Adjust if you want to handle this with a separate table
+            degree: {
+                type: DataTypes.STRING,
                 allowNull: false,
             },
-            is_send_uni: {
+            university: {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
             },
-            work_hours: {
-                type: DataTypes.INTEGER,
+            previous_experience: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            exp_confirmation: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            interests: {
+                type: DataTypes.STRING, // Adjust if you want to handle this with a separate table
                 allowNull: false,
             },
             device: {
@@ -63,10 +63,14 @@ const TutorSchema = async(sequelize: Sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            previous_experience: {
-                type: DataTypes.STRING,
+            work_hours: {
+                type: DataTypes.INTEGER,
                 allowNull: false,
-            }
+            },
+            expected_earnings: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
         },
         {
             sequelize,

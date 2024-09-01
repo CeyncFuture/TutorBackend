@@ -20,9 +20,12 @@ const getUserData = async( userId: number ) => {
     if(!auth)
         throw new NotFoundError(errorMessages.NOT_FOUND.USER_NOT_EXIST);
 
+    const tutor = await user.getTutor();
+
     return { 
         user, 
-        auth 
+        auth,
+        tutor
     };
 }
 

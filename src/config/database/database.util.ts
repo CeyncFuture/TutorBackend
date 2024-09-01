@@ -14,6 +14,7 @@ import StudentSchema from "../../module/student/student.model";
 import TutorSchema from "../../module/tutor/tutor.model";
 import PendingUserSchema from "../../module/pendingUser/pendingUser.model";
 import { SubjectCategorySchema, SubjectSchema } from "../../module/subject/subject.model";
+import SubjectsTutorsSchema from "../../module/joinTables/subjectsTutors/subjectsTutors.model";
 
 //import models
 import { Auth } from "../../module/auth/auth.interface";
@@ -22,6 +23,7 @@ import { Student } from "../../module/student/student.interface";
 import { Tutor } from "../../module/tutor/tutor.interface";
 import { PendingUser } from "../../module/pendingUser/pendingUser.interface";
 import { Subject, SubjectCategory } from "../../module/subject/subject.interface";
+import { SubjectTutor } from "../../module/joinTables/subjectsTutors/subjectsTutors.interface";
 
 import InternalServerError from "../../module/errors/classes/InternalServerError";
 
@@ -38,6 +40,7 @@ const modelDefiners: typeof AuthSchema[]  = [
     PendingUserSchema,
     SubjectSchema,
     SubjectCategorySchema,
+    SubjectsTutorsSchema,
 ];
 
 //Add relations 
@@ -78,6 +81,21 @@ const initializeModelRelations = () => {
   Subject.belongsTo(SubjectCategory,{
     foreignKey: "category_id",
   });
+  SubjectTutor.belongsTo(Subject,{
+    foreignKey: "subject_id",
+  });
+  Subject.hasMany(SubjectTutor,{
+    foreignKey: "subject_id",
+  });
+
+  //Tutor relations
+  Tutor.hasMany(SubjectTutor,{
+    foreignKey: "tutor_id",
+  });
+  SubjectTutor.belongsTo(Tutor,{
+    foreignKey: "tutor_id",
+  });
+
 }
 
 const connectDB = async (connection: IDbConnection) => {

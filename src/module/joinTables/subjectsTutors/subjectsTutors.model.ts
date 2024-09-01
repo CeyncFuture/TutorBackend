@@ -44,6 +44,4 @@ const SubjectTutorSchema = (sequelize: Sequelize) => {
     SubjectTutor.sync();
 }
 
-export default {
-    SubjectTutorSchema
-}
+export default SubjectTutorSchema

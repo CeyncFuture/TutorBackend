@@ -8,9 +8,9 @@
 import { Model, Optional } from "sequelize";
 
 interface IStudent {
-  id: number;
+  id?: number;
+  user_id?: number;
   description?: string;
-  user_id: number;
 }
 
 interface IStudentModel extends Optional< IStudent, "id" | "description" > {}
