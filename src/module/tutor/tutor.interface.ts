@@ -22,9 +22,10 @@ interface ITutor {
     employment: string;
     work_hours: number;
     expected_earnings: number;
+    description?: string;
 }
 
-interface ITutorModel extends Optional<ITutor, "id"> {}
+interface ITutorModel extends Optional<ITutor, "id" | "description"> {}
 
 class Tutor extends Model<ITutor, ITutorModel> implements ITutor {
     public id?: number; // Optional
@@ -40,6 +41,7 @@ class Tutor extends Model<ITutor, ITutorModel> implements ITutor {
     public employment!: string;
     public work_hours!: number;
     public expected_earnings!: number;
+    public description!: string;
 
     public getSubjects!: () => Promise<Subject[]>;
 

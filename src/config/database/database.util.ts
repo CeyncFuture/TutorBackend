@@ -15,6 +15,7 @@ import TutorSchema from "../../module/tutor/tutor.model";
 import PendingUserSchema from "../../module/pendingUser/pendingUser.model";
 import { SubjectCategorySchema, SubjectSchema } from "../../module/subject/subject.model";
 import SubjectsTutorsSchema from "../../module/joinTables/subjectsTutors/subjectsTutors.model";
+import { QualificationSchema, QualificationAttachmentSchema } from "../../module/question/question.model";
 
 //import models
 import { Auth } from "../../module/auth/auth.interface";
@@ -23,7 +24,7 @@ import { Student } from "../../module/student/student.interface";
 import { Tutor } from "../../module/tutor/tutor.interface";
 import { PendingUser } from "../../module/pendingUser/pendingUser.interface";
 import { Subject, SubjectCategory } from "../../module/subject/subject.interface";
-import { SubjectTutor } from "../../module/joinTables/subjectsTutors/subjectsTutors.interface";
+import { Question, QuestionAttachment } from "../../module/question/question.interface";
 
 import InternalServerError from "../../module/errors/classes/InternalServerError";
 import { constants } from "../../constants";
@@ -33,7 +34,7 @@ import { constants } from "../../constants";
 let sequelizeInstance: Sequelize | null = null;
 
 //Add more models
-const modelDefiners: typeof AuthSchema[]  = [
+const modelDefiners: typeof AuthSchema[] = [
     AuthSchema,
     UserSchema,
     StudentSchema,
@@ -42,6 +43,8 @@ const modelDefiners: typeof AuthSchema[]  = [
     SubjectSchema,
     SubjectCategorySchema,
     SubjectsTutorsSchema,
+    QualificationSchema,
+    QualificationAttachmentSchema,
 ];
 
 //Add relations 
@@ -94,6 +97,19 @@ const initializeModelRelations = () => {
     foreignKey: 'subject_id' 
   });
 
+  //Question relations
+  Question.hasMany(QuestionAttachment,{
+    foreignKey: "question_id",
+  });
+  QuestionAttachment.belongsTo(Question, {
+    foreignKey: "question_id",
+  });
+  User.hasMany(Question,{
+    foreignKey: "user_id",
+  });
+  Question.belongsTo(User,{
+    foreignKey: "user_id",
+  });
 }
 
 const connectDB = async (connection: IDbConnection) => {

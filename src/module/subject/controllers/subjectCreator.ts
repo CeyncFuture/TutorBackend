@@ -5,10 +5,10 @@
  * copyright 2024
 */
 
-import { ISubject, ISubjectCategory, ISubjectCreationInputSanitizer } from "../subject.interface"
+import { ISubject, ISubjectCategory, ISubjectCreationSanitizeInputs } from "../subject.interface"
 import SubjectService from "../subject.service"
 
-const createSubject = async(sanitizedInputs: ISubjectCreationInputSanitizer) => {
+const createSubject = async(sanitizedInputs: ISubjectCreationSanitizeInputs) => {
 
     const category: ISubjectCategory = {
         name: sanitizedInputs.category_name

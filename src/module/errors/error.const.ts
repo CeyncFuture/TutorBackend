@@ -141,6 +141,11 @@ export const errorMessages = {
       "any.required": "Description is required!",
       "string.empty": "Description cannot be empty!",
       "string.base": "Description must be a string!",
+    },
+    QUESTION_R: {
+      "any.required": "Question is required!",
+      "string.empty": "Question cannot be empty!",
+      "string.base": "Question must be a string!",
     }
   },
 };

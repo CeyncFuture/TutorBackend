@@ -40,7 +40,7 @@ class SubjectCategory extends Model <ISubjectCategoryModel, ISubjectCategory> im
     public name!: string;
 }
 
-interface ISubjectCreationInputSanitizer {
+interface ISubjectCreationSanitizeInputs {
     subject_name: string;
     category_name: string;
 }
@@ -52,5 +52,5 @@ export {
     SubjectCategory,
     ISubjectCategory,
     ISubjectCategoryModel,
-    ISubjectCreationInputSanitizer
+    ISubjectCreationSanitizeInputs
 }

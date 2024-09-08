@@ -8,7 +8,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import SubjectGetter from "./controllers/subjectGetter";
 import SubjectCreator from "./controllers/subjectCreator";
-import { ISubjectCreationInputSanitizer } from "./subject.interface";
+import { ISubjectCreationSanitizeInputs } from "./subject.interface";
 
 const getSubjects = async( req: Request, res: Response ) => {
 
@@ -24,7 +24,7 @@ const getSubjects = async( req: Request, res: Response ) => {
 
 const createSubject = async( req: Request, res: Response ) => {
 
-    const sanitizedInputs = req.body as ISubjectCreationInputSanitizer;
+    const sanitizedInputs = req.body as ISubjectCreationSanitizeInputs;
     
     await SubjectCreator.createSubject(sanitizedInputs);
 

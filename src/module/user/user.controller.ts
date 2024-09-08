@@ -9,7 +9,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ICustomRequestAuth } from "../auth/auth.interface";
 import { IUserMutationSanitizedInput } from "./user.interface";
-import CommonUtil from "../common/common.util";
+import commonUtil from "../common/common.util";
 import UserGetter from "./controllers/userGetter";
 import userCreator from "./controllers/userCreator";
 
@@ -56,7 +56,7 @@ const createUser = async( req: Request, res: Response ) => {
     const response = await userCreator.createUser(userId, sanitizedInputs);
 
     res.status(StatusCodes.CREATED).json({
-        message: `${CommonUtil.capitalizedFirstLatter(role)} created successfully!`,
+        message: `${commonUtil.capitalizedFirstLatter(role)} created successfully!`,
         payload: {
             user_role: response?.auth?.role_id,
             email: response?.auth?.email,

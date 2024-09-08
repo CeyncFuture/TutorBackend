@@ -40,6 +40,8 @@ export const constants = {
             SUBJECT: "subject",
             SUBJECT_CATEGORY: "subject_category",
             SUBJECT_TUTOR: "subject_tutor",
+            QUESTION: "question",
+            QUESTION_ATTACHMENT: "question_attachment",
         },
         TABLE_NAMES: {
             AUTHS: "auths",
@@ -51,6 +53,8 @@ export const constants = {
             SUBJECTS: "subjects",
             SUBJECT_CATEGORIES: "subject_categories",
             SUBJECTS_TUTORS: "subjects_tutors",
+            QUESTIONS: "questions",
+            QUESTION_ATTACHMENTS: "question_attachments",
         },
         DB_HOST: process.env.DB_HOST,
         DB_PORT: process.env.DB_PORT,
@@ -66,7 +70,7 @@ export const constants = {
                 NAME: "access-token",
                 EXP: process.env.ACCESS_TOKEN_EXP
                     ? parseInt(process.env.ACCESS_TOKEN_EXP)
-                    :  2 * 60, //default 2min
+                    :  10 * 60, //default 2min
             },
             REFRESH_TOKEN: {
                 NAME: "refresh-token",
@@ -108,5 +112,24 @@ export const constants = {
         PASS: process.env.EMAIL_PASS,
         SENDER_IDENTITY: process.env.SENDER_IDENTITY,
     },
+
+    //AWS config
+    AWS: {
+        S3_ACCESS_KEY: process.env.S3_ACCESS_KEY || "",
+        S3_SECRET_KEY: process.env.S3_SECRET_KEY || "",
+        S3_REGION: process.env.S3_REGION || "us-east-1",
+        S3_BUCKET: process.env.S3_BUCKET || "your-s3-bucket-name",
+        S3_SESSION_EXPIRE: (process.env.S3_SESSION_EXPIRE && parseInt(process.env.S3_SESSION_EXPIRE)) || 3600
+      },
+
+    //file validation
+    FILE_VALIDATION: {
+        MAX_FILE_SIZE: 2 * 1024 * 1024, // 10MB
+        FILE_NAME_MAX_LENGTH: 40,
+        IMAGE_MIME_TYPES: [
+            'image/jpeg',  // JPEG Image
+            'image/png',   // PNG Image
+        ]
+    }
 
 };
