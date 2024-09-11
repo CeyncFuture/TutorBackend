@@ -12,6 +12,13 @@ interface IS3Config {
   bucketName: string;
 }
 
+interface IFTPConfig {
+  host: string,
+  user: string,
+  password: string,
+  secure: boolean
+}
+
 interface IUploadResponse {
   Location: string;
   ETag: string;
@@ -32,4 +39,5 @@ export {
   IUploadResponse,
   IPresignedUrlResponse,
   IDeleteResponse,
+  IFTPConfig,
 }

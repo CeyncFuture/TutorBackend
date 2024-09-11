@@ -17,7 +17,7 @@ const getSubjects = async( req: Request, res: Response ) => {
     res.status(StatusCodes.OK).json({
         message: "Subjects retrieved successfully!",
         payload: {
-            subjects: response
+            categories: response
         }
     })
 }

@@ -21,8 +21,8 @@ const createQuestion = async(userId: number, sanitizedInputs: IQuestionCreationS
 
     await Promise.all (
         files.map( async( file ) => {
-            const { Key } = await manageFileUtil.uploadFile("questions",file);
-            uploadedAttachments.push({file_path: Key});
+            const file_path = await manageFileUtil.uploadFile("question_attachment", file);
+            uploadedAttachments.push({file_path: file_path});
         })
     );
 

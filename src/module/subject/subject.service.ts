@@ -17,14 +17,27 @@ const saveCategory = async(category: ISubjectCategoryModel, transaction?: Transa
     return SubjectCategory.create(category, {transaction});
 }
 
+// const findAll = async() => {
+//     return Subject.findAll({
+//         attributes: ["id","name"],
+//         include: [
+//             {
+//                 model: SubjectCategory,
+//                 required: true,
+//                 attributes: ["name"]
+//             }
+//         ]
+//     });
+// }
+
 const findAll = async() => {
-    return Subject.findAll({
+    return SubjectCategory.findAll({
         attributes: ["id","name"],
         include: [
             {
-                model: SubjectCategory,
+                model: Subject,
                 required: true,
-                attributes: ["name"]
+                attributes: ["id","name"]
             }
         ]
     });

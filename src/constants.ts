@@ -82,7 +82,7 @@ export const constants = {
         },
         COOLDOWN_TIME: 60, //1 min
         BLOCKED_COOL_DOWN_TIME: 3 * 60 * 60, //3 hour
-        VALID_TIME: 30 * 60, //30 minute
+        VALID_TIME: 5 * 60, //5 minute
         MAXIMUM_RETRY: 3, // Maximum number of retry attempts
         PASSWORD_SALT_ROUND: process.env.PASSWORD_SALT_ROUND || 10,
 

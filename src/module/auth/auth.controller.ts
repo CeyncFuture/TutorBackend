@@ -38,7 +38,7 @@ const userLogin = async( req: Request, res: Response ) => {
                 user_id: response?.user?.id,
                 first_name: response?.user?.first_name,
                 last_name: response?.user?.last_name,
-                user_role: response?.auth?.role_id,
+                role: response?.auth?.role_id,
                 email: response?.auth?.email,
                 profile_picture: response?.user?.profile_picture,
                 is_verified: response?.auth?.is_verified,

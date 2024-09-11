@@ -13,7 +13,7 @@ import { Request, Response, NextFunction } from "express";
 const questionInputsSanitizer = async(req: Request, res: Response, next: NextFunction) => {
 
     const inputValidationSchema = Joi.object({
-        phone_number: Joi.string().email().required().messages(errorMessages.VALIDATION.PHONE_NUMBER_R),
+        phone_number: Joi.string().required().messages(errorMessages.VALIDATION.PHONE_NUMBER_R),
         question: Joi.string().required().messages(errorMessages.VALIDATION.QUESTION_R),
     });
 
@@ -23,12 +23,6 @@ const questionInputsSanitizer = async(req: Request, res: Response, next: NextFun
     })
     
     if( error )  errorUtil.throwValidationError(error.details);
-    
-    //Manipulate body data
-    req.body = {
-        ...req.body,
-        email: req.body.email.toLowerCase(),
-    };
 
     next(); 
 }

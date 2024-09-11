@@ -8,8 +8,16 @@ const createUserSanitizer = (req: Request, res: Response, next: NextFunction ) =
     
     const inputValidationSchema = Joi.object({
         role: Joi.string().required().valid(constants.USER_ROLES.STUDENT, constants.USER_ROLES.TUTOR).messages(errorMessages.VALIDATION.ROLE_R),
-        phone_number: Joi.string().required().messages(errorMessages.VALIDATION.PHONE_NUMBER),
-        address: Joi.string().min(5).max(100).required().messages(errorMessages.VALIDATION.ADDRESS_R),
+        phone_number: Joi.when('role', {
+            is: constants.USER_ROLES.TUTOR,
+            then: Joi.string().required().messages(errorMessages.VALIDATION.PHONE_NUMBER),
+            otherwise: Joi.string()
+        }),
+        address: Joi.when('role', {
+            is: constants.USER_ROLES.TUTOR,
+            then: Joi.string().min(5).max(100).required().messages(errorMessages.VALIDATION.ADDRESS_R),
+            otherwise: Joi.string()
+        }),
         highest_education_qualification: Joi.when('role', {
             is: constants.USER_ROLES.TUTOR,
             then: Joi.string().required().messages(errorMessages.VALIDATION.HIGHEST_EDUCATION_QUALIFICATION_R),
@@ -65,15 +73,12 @@ const createUserSanitizer = (req: Request, res: Response, next: NextFunction ) =
             then: Joi.number().greater(0).required().messages(errorMessages.VALIDATION.EXP_EARNINGS_R),
             otherwise: Joi.number().greater(0)
         }),
-        description: Joi.when('role', {
-            is: constants.USER_ROLES.STUDENT,
-            then: Joi.string().required().messages(errorMessages.VALIDATION.DESCRIPTION_R),
-            otherwise: Joi.string()
-        })
-    }).unknown();
+        description: Joi.string().optional().messages(errorMessages.VALIDATION.DESCRIPTION_R),
+    });
 
     const { error } = inputValidationSchema.validate(req.body, {
         abortEarly: false,
+        allowUnknown: true
     })
     
     if( error )  ErrorUtil.throwValidationError(error.details);
