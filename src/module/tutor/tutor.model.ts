@@ -27,29 +27,57 @@ const TutorSchema = async(sequelize: Sequelize) => {
                 },
                 onDelete: "CASCADE"
             },
-            degree: {
+            highest_education_qualification: {
                 type: DataTypes.STRING,
-            },
-            exp_earnings: {
-                type: DataTypes.INTEGER,
+                allowNull: false,
             },
             high_school: {
                 type: DataTypes.STRING,
+                allowNull: false,
+            },
+            degree: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            university: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+            },
+            previous_experience: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            exp_confirmation: {
+                type: DataTypes.STRING,
+                allowNull: false,
             },
             interests: {
-                type: DataTypes.STRING, //TODO should be change to get from an other table;
+                type: DataTypes.STRING, // Adjust if you want to handle this with a separate table
+                allowNull: false,
             },
-            is_send_uni: {
-                type: DataTypes.BOOLEAN,
+            device: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            employment: {
+                type: DataTypes.STRING,
+                allowNull: false,
             },
             work_hours: {
                 type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            expected_earnings: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
             },
         },
         {
             sequelize,
             modelName: constants.DATABASE.MODEL_NAMES.TUTOR,
             tableName: constants.DATABASE.TABLE_NAMES.TUTORS,
+            timestamps: true,
+            underscored: true,
         }
     );
 

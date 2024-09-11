@@ -56,7 +56,8 @@ const UserSchema = async(sequelize: Sequelize) => {
             sequelize,
             modelName: constants.DATABASE.MODEL_NAMES.USER,
             tableName: constants.DATABASE.TABLE_NAMES.USERS,
-            timestamps: true
+            timestamps: true,
+            underscored: true,
         }
     );
 

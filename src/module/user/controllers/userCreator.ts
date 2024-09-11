@@ -9,11 +9,16 @@ import { errorMessages } from "../../errors/error.const";
 import { constants } from "../../../constants";
 import { ITutor } from "../../tutor/tutor.interface";
 import { IUserMutationSanitizedInput } from "../user.interface"
+import { IStudent } from "../../student/student.interface";
+import { ISubjectTutor } from "../../joinTables/subjectsTutors/subjectsTutors.interface";
 import DatabaseUtil from "../../../config/database/database.util";
 import TutorService from "../../tutor/tutor.service";
 import userService from "../user.service"
 import NotFoundError from "../../errors/classes/NotFoundError";
 import ConflictError from "../../errors/classes/ConflictError";
+import StudentService from "../../student/student.service";
+
+import SubjectsTutorsService from "../../joinTables/subjectsTutors/subjectsTutors.service";
 
 const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitizedInput ) => {
     //get exist user table records
@@ -34,15 +39,33 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
     }
 
     dbExistAuth.role_id = sanitizedInputs.role;
+
+    //Check is user already registered
+    const dbExistTutor = await TutorService.findByUserId(dbExistUser.id);
+    const dbExistStudent = await StudentService.findByUserId(dbExistUser.id);
+
+    if(dbExistTutor || dbExistStudent){
+        throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
+    }
     
     //Do unique changes for every roles
     if( sanitizedInputs.role === constants.USER_ROLES.TUTOR) {
 
-        const dbExistTutor = await TutorService.findByUserId(dbExistUser.id);
-
-        if(dbExistTutor){
+        if( !Array.isArray(sanitizedInputs.interests) || sanitizedInputs.interests?.length < 0 )
             throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
-        }
+
+        const subjectsTutors: ISubjectTutor[] = (await Promise.all(
+            sanitizedInputs.interests.map(async (item) => {
+                const exists = await SubjectsTutorsService.findBySubjectId(item);
+                if (exists) {
+                    return {
+                        subject_id: item,
+                        tutor_id: dbExistUser.id,
+                    };
+                }
+                return null; // Return null for non-existing subjects
+            })
+        )).filter(Boolean) as ISubjectTutor[];
 
         let tutor: ITutor = {
             ...sanitizedInputs,
@@ -63,22 +86,53 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
             //save tutor table records
             const dbTutor = await TutorService.save(tutor, transaction);
 
+            const dbSubjects = await SubjectsTutorsService.bulkSave(subjectsTutors, transaction)
+
             await transaction.commit();
 
             return {
                 user: dbExistUser,
                 auth: dbExistAuth,
                 tutor: dbTutor,
+                subjects: dbSubjects
             }
         }catch(err){
             await transaction.rollback();
             throw err;
         }
     }
+
+    //Student business logic
     else if( sanitizedInputs.role === constants.USER_ROLES.STUDENT) {
-        return {
+        
+        const student: IStudent = sanitizedInputs as IStudent;
+
+        student.user_id = dbExistUser.id;
+
+        //Get transaction instance for roll back the db saving.
+        const sequelizeInstance = DatabaseUtil.getSequelizeInstance();
+        const transaction = await sequelizeInstance.transaction();
+    
+        try{
+            //save user table records
+            await dbExistUser.save({transaction});
+            //save auth table records
+            await dbExistAuth.save({transaction});
+            //save tutor table records
+            const dbStudent = await StudentService.save(student, transaction);
+
+            await transaction.commit();
+
+            return {
             user: dbExistUser,
+            auth: dbExistAuth,
+            student: dbStudent,
         }
+        }catch(err){
+            await transaction.rollback();
+            throw err;
+        }
+
     }
 
     return {};

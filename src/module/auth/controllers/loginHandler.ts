@@ -33,11 +33,15 @@ const login = async( sanitizedInputs: ILoginSanitizedInputs ) => {
         user_id: dbExistUser.id,
         role: dbExistAuth.role_id,
     }
+
+    //If tutor set value
+    const dbExistTutor = await dbExistUser.getTutor();
     
     return {
         token: AuthUtil.generateTokens(authTokenBodyParam) as IAuthResponse,
         user: dbExistUser,
-        auth: dbExistAuth
+        auth: dbExistAuth,
+        tutor: dbExistTutor,
     }
 
 }

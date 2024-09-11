@@ -18,10 +18,6 @@ const StudentSchema = (sequelize: Sequelize) => {
                 allowNull: false,
                 autoIncrement: true
             },
-            description: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
             user_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -30,7 +26,11 @@ const StudentSchema = (sequelize: Sequelize) => {
                     key: "id"
                 },
                 onDelete: "CASCADE"
-            }
+            },
+            description: {
+                type: DataTypes.STRING,
+                allowNull: true
+            },
         },
         {
             sequelize,

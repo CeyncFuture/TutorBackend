@@ -9,7 +9,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ICustomRequestAuth } from "../auth/auth.interface";
 import { IUserMutationSanitizedInput } from "./user.interface";
-import CommonUtil from "../common/common.util";
+import commonUtil from "../common/common.util";
 import UserGetter from "./controllers/userGetter";
 import userCreator from "./controllers/userCreator";
 
@@ -23,11 +23,26 @@ const getUser = async( req: Request, res: Response ) => {
         payload: {
             first_name: response?.user?.first_name,
             last_name: response?.user?.last_name,
-            user_role: response?.auth?.role_id,
+            role: response?.auth?.role_id,
             email: response?.auth?.email,
-            phone_number: response?.user?.phone_number,
             profile_picture: response?.user?.profile_picture,
             is_verified: response?.auth?.is_verified,
+            country_code: response.user?.country_code,
+            phone_number: response.user?.phone_number,
+            address: response.user?.address,
+            exp_earnings: response.tutor?.expected_earnings,
+            highest_education_qualification: response.tutor?.highest_education_qualification,
+            high_school: response.tutor?.high_school,
+            degree: response.tutor?.degree,
+            university: response.tutor?.university,
+            previous_experience: response.tutor?.previous_experience,
+            exp_confirmation: response.tutor?.exp_confirmation,
+            interests: response.subjects,
+            device: response.tutor?.device,
+            employment: response.tutor?.employment,
+            work_hours: response.tutor?.work_hours,
+            expected_earnings: response.tutor?.expected_earnings,
+            subjects: response.subjects,
             is_logged_in: true,
         }
     })
@@ -41,9 +56,9 @@ const createUser = async( req: Request, res: Response ) => {
     const response = await userCreator.createUser(userId, sanitizedInputs);
 
     res.status(StatusCodes.CREATED).json({
-        message: `${CommonUtil.capitalizedFirstLatter(role)} created successfully!`,
+        message: `${commonUtil.capitalizedFirstLatter(role)} created successfully!`,
         payload: {
-            user_role: response?.auth?.role_id,
+            role: response?.auth?.role_id,
             email: response?.auth?.email,
             is_verified: response?.auth?.is_verified,
             first_name: response?.user?.first_name,
@@ -52,12 +67,18 @@ const createUser = async( req: Request, res: Response ) => {
             country_code: response.user?.country_code,
             phone_number: response.user?.phone_number,
             address: response.user?.address,
-            degree: response.tutor?.degree,
-            exp_earnings: response.tutor?.exp_earnings,
+            exp_earnings: response.tutor?.expected_earnings,
+            highest_education_qualification: response.tutor?.highest_education_qualification,
             high_school: response.tutor?.high_school,
-            interests: response.tutor && JSON.parse(response.tutor.interests),
-            is_send_uni: response.tutor?.is_send_uni,
+            degree: response.tutor?.degree,
+            university: response.tutor?.university,
+            previous_experience: response.tutor?.previous_experience,
+            exp_confirmation: response.tutor?.exp_confirmation,
+            interests: response.tutor?.interests,
+            device: response.tutor?.device,
+            employment: response.tutor?.employment,
             work_hours: response.tutor?.work_hours,
+            expected_earnings: response.tutor?.expected_earnings,
         }
     })
 }

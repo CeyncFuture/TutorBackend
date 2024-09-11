@@ -1,7 +1,7 @@
 import { Router } from "express";
-import AuthorizationHandler from "../auth/middlewares/authorizationHandler";
 import { constants } from "../../constants";
 import UserController from "./user.controller";
+import AuthorizationHandler from "../auth/middlewares/authorizationHandler";
 import CreateUserSanitizer from "./middlewares/createUserSanitizer";
 
 const route = Router();

@@ -40,6 +40,7 @@ const AuthSchema = (sequelize: Sequelize) => {
           modelName: constants.DATABASE.MODEL_NAMES.AUTH,
           tableName: constants.DATABASE.TABLE_NAMES.AUTHS,
           timestamps: true,
+          underscored: true,
         }
       );
 

@@ -7,6 +7,7 @@
 
 import { Association, Model, Optional } from "sequelize";
 import { Auth } from "../auth/auth.interface";
+import { Tutor } from "../tutor/tutor.interface";
 
 interface IUser {
     id?: number;
@@ -33,8 +34,11 @@ class User extends Model<IUser, IUserModel> implements IUser {
 
     // Define the association properties
     public getAuth!: () => Promise<Auth | null>;
+    public getTutor!: () => Promise<Tutor | null>;
+
     public static associations: {
         auth: Association<User, Auth>;
+        tutor: Association<User, Tutor>;
     };
 } 
 
@@ -42,12 +46,22 @@ interface IUserMutationSanitizedInput {
     role: string;
     phone_number: string;
     address: string;
-    degree: string;
-    exp_earnings: number;
-    high_school: string;
-    interests: string[];
-    is_send_uni: boolean;
-    work_hours: number;
+    
+    /*Tutor data*/
+    highest_education_qualification?: string;
+    high_school?: string;
+    degree?: string;
+    university?: string;
+    previous_experience?: string;
+    exp_confirmation?: string;
+    interests?: number[];
+    device?: string;
+    employment?: string;
+    work_hours?: number;
+    expected_earnings?: number;
+
+    /*Student data */
+    description?: string
 }
 
 export {
