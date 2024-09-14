@@ -45,7 +45,7 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
     const dbExistStudent = await StudentService.findByUserId(dbExistUser.id);
 
     if(dbExistTutor || dbExistStudent){
-        throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
+        // throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
     }
     
     //Do unique changes for every roles
@@ -60,7 +60,6 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
                 if (exists) {
                     return {
                         subject_id: item,
-                        tutor_id: dbExistUser.id,
                     };
                 }
                 return null; // Return null for non-existing subjects
@@ -86,7 +85,17 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
             //save tutor table records
             const dbTutor = await TutorService.save(tutor, transaction);
 
-            const dbSubjects = await SubjectsTutorsService.bulkSave(subjectsTutors, transaction)
+            subjectsTutors.forEach((item)=>{
+                item.tutor_id = dbTutor.id
+            })
+
+            let dbSubjects = await SubjectsTutorsService.bulkSave(subjectsTutors, transaction);
+
+            // convert subject response to subject ids
+            let subjects: number[] = [];
+            dbSubjects.forEach((subject)=> {
+                subjects.push(subject.id);
+            }); 
 
             await transaction.commit();
 
@@ -94,7 +103,7 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
                 user: dbExistUser,
                 auth: dbExistAuth,
                 tutor: dbTutor,
-                subjects: dbSubjects
+                subjects: subjects
             }
         }catch(err){
             await transaction.rollback();

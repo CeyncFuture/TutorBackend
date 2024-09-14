@@ -33,7 +33,6 @@ const ftpClient = new Client();
 // Helper function to generate a unique filename
 const generateUniqueFileName = (originalName: string): string => {
   const removeSpaces = originalName.replace(/\s+/g, '-');
-  console.log(removeSpaces,"+++++++++++++++++");
   
   const fileExtension = removeSpaces.split('.').pop(); // Get the file extension
   const uniqueName = uuidv4(); // Generate a unique ID

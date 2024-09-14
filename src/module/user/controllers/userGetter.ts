@@ -23,7 +23,14 @@ const getUserData = async( userId: number ) => {
         throw new NotFoundError(errorMessages.NOT_FOUND.USER_NOT_EXIST);
 
     const tutor: Tutor = await user.getTutor() as Tutor;
-    const subjects = tutor && await subjectService.findAllWithTutor(tutor.id);
+
+    // convert subject response to subject ids
+    let subjects: number[] = [];
+
+    const dbSubjects = tutor && await subjectService.findAllWithTutor(tutor.id);
+    dbSubjects.forEach((subject)=> {
+        subjects.push(subject.id);
+    });    
 
     return { 
         user, 

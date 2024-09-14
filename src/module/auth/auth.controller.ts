@@ -73,9 +73,13 @@ const userLogout = async( req: Request, res: Response ) => {
 const getOTP = async( req: Request, res: Response ) => {
     const { userId } = req.auth as ICustomRequestAuth;
 
-    await OTPHandler.requestOTP(userId);
+    const otp = await OTPHandler.requestOTP(userId);
+
     return res.status(StatusCodes.OK).json({
         message: successMessages.OTP_SENDED,
+        payload: {
+            otp,
+        }
     })
 };
 

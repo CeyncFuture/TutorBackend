@@ -9,8 +9,8 @@ import { Model, Optional } from "sequelize";
 
 interface ISubjectTutor {
     id?: number;
-    subject_id: number;
-    tutor_id: number;
+    subject_id?: number;
+    tutor_id?: number;
 }
 
 interface ISubjectTutorModel extends Optional <ISubjectTutor, "id"> {};

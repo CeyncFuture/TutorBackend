@@ -30,6 +30,7 @@ const SubjectTutorSchema = (sequelize: Sequelize) => {
                     model: constants.DATABASE.TABLE_NAMES.TUTORS,
                     key: 'id',
                 },
+                allowNull: true
             }
         },
         {

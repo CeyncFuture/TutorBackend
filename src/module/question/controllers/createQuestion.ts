@@ -21,7 +21,7 @@ const createQuestion = async(userId: number, sanitizedInputs: IQuestionCreationS
 
     await Promise.all (
         files.map( async( file ) => {
-            const file_path = await manageFileUtil.uploadFile("question_attachment", file);
+            const file_path = await manageFileUtil.uploadFile("att/question_attachment", file);
             uploadedAttachments.push({file_path: file_path});
         })
     );
@@ -38,7 +38,7 @@ const createQuestion = async(userId: number, sanitizedInputs: IQuestionCreationS
             attachment.question_id = bdQuestion.id
         })
 
-        const bdQuestionAttachment = await questionService.saveBulkQuestionAttachment(uploadedAttachments, transaction)
+        const bdQuestionAttachment = await questionService.saveBulkQuestionAttachment(uploadedAttachments, transaction);
         transaction.commit();
 
         return {

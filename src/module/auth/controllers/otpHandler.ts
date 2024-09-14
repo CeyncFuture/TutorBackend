@@ -85,6 +85,8 @@ const requestOTP = async (userId: number) => {
     } else {
         // Log OTP for non-production environments
         console.log(`OTP for user ${userId} is ${otp}`);
+
+        return (`OTP for user ${userId} is ${otp}`);
     }
 };
 
