@@ -23,7 +23,7 @@ const getUserData = async( userId: number ) => {
         throw new NotFoundError(errorMessages.NOT_FOUND.USER_NOT_EXIST);
 
     const tutor: Tutor = await user.getTutor() as Tutor;
-
+    
     // convert subject response to subject ids
     let subjects: number[] = [];
 

@@ -57,6 +57,7 @@ const userLogin = async( req: Request, res: Response ) => {
                 employment: response.tutor?.employment,
                 work_hours: response.tutor?.work_hours,
                 expected_earnings: response.tutor?.expected_earnings,
+                description: response.tutor?.description,
                 is_logged_in: true,
             },//TODO: managed above payload
         }

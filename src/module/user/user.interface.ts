@@ -65,8 +65,8 @@ interface IUserMutationSanitizedInput {
 }
 
 interface IUserUpdateSanitizedInput {
-    phone_number: string;
-    address: string;
+    phone_number?: string;
+    address?: string;
     profile_picture?: string;
 
     /*Tutor data*/
@@ -76,7 +76,6 @@ interface IUserUpdateSanitizedInput {
     university?: string;
     previous_experience?: string;
     exp_confirmation?: string;
-    interests?: number[];
     device?: string;
     employment?: string;
     work_hours?: number;

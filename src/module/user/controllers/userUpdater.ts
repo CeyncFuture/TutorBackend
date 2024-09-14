@@ -44,8 +44,8 @@ const updateUser = async(userId: number, role: string, sanitizedInputs: IUserUpd
         const dbSubjects = dbExistTutor && await subjectService.findAllWithTutor(dbExistTutor.id);
         dbSubjects.forEach((subject)=> {
             subjects.push(subject.id);
-        });    
-
+        }); 
+        
         Object.assign(dbExistTutor, sanitizedInputs as ITutor);
         Object.assign(dbExistUser, sanitizedInputs as IUser);
 
