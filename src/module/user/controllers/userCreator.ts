@@ -93,8 +93,9 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
 
             // convert subject response to subject ids
             let subjects: number[] = [];
+            
             dbSubjects.forEach((subject)=> {
-                subjects.push(subject.id);
+                subjects.push(subject.subject_id);
             }); 
 
             await transaction.commit();
