@@ -19,6 +19,8 @@ import ConflictError from "../../errors/classes/ConflictError";
 import StudentService from "../../student/student.service";
 
 import SubjectsTutorsService from "../../joinTables/subjectsTutors/subjectsTutors.service";
+import { IAuthResponse, IAuthTokenBody } from "../../auth/auth.interface";
+import AuthUtil from "../../auth/auth.util";
 
 const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitizedInput ) => {
     //get exist user table records
@@ -100,11 +102,17 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
 
             await transaction.commit();
 
+            const authTokenBodyParam: IAuthTokenBody = {
+                user_id: dbExistUser.id,
+                role: dbExistAuth.role_id,
+            }
+
             return {
                 user: dbExistUser,
                 auth: dbExistAuth,
                 tutor: dbTutor,
-                subjects: subjects
+                subjects: subjects,
+                token: AuthUtil.generateTokens(authTokenBodyParam) as IAuthResponse,
             }
         }catch(err){
             await transaction.rollback();

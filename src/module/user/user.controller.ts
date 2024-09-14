@@ -15,9 +15,9 @@ import userCreator from "./controllers/userCreator";
 import userUpdater from "./controllers/userUpdater";
 
 const getUser = async( req: Request, res: Response ) => {
-    const { userId } = req.auth as ICustomRequestAuth;
+    const { userId, role } = req.auth as ICustomRequestAuth;
 
-    const response = await UserGetter.getUserData(userId);
+    const response = await UserGetter.getUserData(userId, role);
 
     res.status(StatusCodes.OK).json({
         message: "User data retrieved successfully!",
@@ -57,7 +57,6 @@ const createUser = async( req: Request, res: Response ) => {
     const response = await userCreator.createUser(userId, sanitizedInputs);
     console.log();
     
-
     res.status(StatusCodes.CREATED).json({
         message: `${commonUtil.capitalizedFirstLatter(role)} created successfully!`,
         payload: {
@@ -83,7 +82,8 @@ const createUser = async( req: Request, res: Response ) => {
             work_hours: response.tutor?.work_hours,
             expected_earnings: response.tutor?.expected_earnings,
             description: response?.tutor?.description,
-        }
+        },
+        token: response.token
     })
 }
 
