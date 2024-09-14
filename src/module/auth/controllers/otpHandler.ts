@@ -69,6 +69,15 @@ const requestOTP = async (userId: number) => {
     // Generate new OTP
     const otp = AuthUtil.generateOTP();
 
+    // Send OTP based on the environment
+    if (constants.SERVER.ENV === constants.ENV.PRODUCTION || constants.SERVER.ENV === constants.ENV.TEST) {
+        // Implement email send
+        await EmailUtil.sendOTPViaEmail(dbExistAuth.email, dbExistUser.first_name ,otp);
+    } else {
+        // Log OTP for non-production environments
+        console.log(`OTP for user ${userId} is ${otp}`);
+    }
+
     // Assign new values and save
     dbPendingUser.expires_at = new Date(now + (constants.SESSIONS.VALID_TIME * 1000)); //convert to second 
     dbPendingUser.requested_at = new Date(Date.now());
@@ -77,15 +86,7 @@ const requestOTP = async (userId: number) => {
 
     await dbPendingUser.save();
 
-    // Send OTP based on the environment
-    if (constants.SERVER.ENV === constants.ENV.PRODUCTION || constants.SERVER.ENV === constants.ENV.TEST) {
-
-        // Implement email send
-        await EmailUtil.sendOTPViaEmail(dbExistAuth.email, dbExistUser.first_name ,otp);
-    } else {
-        // Log OTP for non-production environments
-        console.log(`OTP for user ${userId} is ${otp}`);
-
+    if (constants.SERVER.ENV === constants.ENV.DEVELOPMENT) {
         return (`OTP for user ${userId} is ${otp}`);
     }
 };

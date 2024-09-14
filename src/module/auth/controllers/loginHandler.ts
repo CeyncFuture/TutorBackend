@@ -11,6 +11,7 @@ import AuthUtil from "../auth.util";
 import UserService from "../../user/user.service";
 import AuthService from "../auth.service";
 import BadRequestError from "../../errors/classes/BadRequestError";
+import subjectService from "../../subject/subject.service";
 
 const login = async( sanitizedInputs: ILoginSanitizedInputs ) => {
 
@@ -36,12 +37,18 @@ const login = async( sanitizedInputs: ILoginSanitizedInputs ) => {
 
     //If tutor set value
     const dbExistTutor = await dbExistUser.getTutor();
+    const dbSubjects = dbExistTutor && await subjectService.findAllWithTutor(dbExistTutor.id);
+    const subjects: number[] = [];
+    dbSubjects && dbSubjects.forEach((subject)=> {
+        subjects.push(subject.id);
+    });  
     
     return {
         token: AuthUtil.generateTokens(authTokenBodyParam) as IAuthResponse,
         user: dbExistUser,
         auth: dbExistAuth,
         tutor: dbExistTutor,
+        subjects
     }
 
 }

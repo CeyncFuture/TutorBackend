@@ -45,7 +45,7 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
     const dbExistStudent = await StudentService.findByUserId(dbExistUser.id);
 
     if(dbExistTutor || dbExistStudent){
-        // throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
+        throw new ConflictError(errorMessages.CONFLICT.USER_EXISTS);
     }
     
     //Do unique changes for every roles
