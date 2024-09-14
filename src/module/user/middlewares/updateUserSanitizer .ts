@@ -14,6 +14,8 @@ import { constants } from "../../../constants";
 const updateUserSanitizer = (req: Request, res: Response, next: NextFunction ) => {
     
     const inputValidationSchema = Joi.object({
+        first_name: Joi.string().optional().messages(errorMessages.VALIDATION.FIRST_NAME_R),
+        last_name: Joi.string().optional().messages(errorMessages.VALIDATION.LAST_NAME_R),
         phone_number: Joi.when('role', {
             is: constants.USER_ROLES.TUTOR,
             then: Joi.string().optional().messages(errorMessages.VALIDATION.PHONE_NUMBER),

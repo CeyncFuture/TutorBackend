@@ -65,6 +65,8 @@ interface IUserMutationSanitizedInput {
 }
 
 interface IUserUpdateSanitizedInput {
+    first_name: string;
+    last_name: string;
     phone_number?: string;
     address?: string;
     profile_picture?: string;
