@@ -8,10 +8,11 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ICustomRequestAuth } from "../auth/auth.interface";
-import { IUserMutationSanitizedInput } from "./user.interface";
+import { IUserMutationSanitizedInput, IUserUpdateSanitizedInput } from "./user.interface";
 import commonUtil from "../common/common.util";
 import UserGetter from "./controllers/userGetter";
 import userCreator from "./controllers/userCreator";
+import userUpdater from "./controllers/userUpdater";
 
 const getUser = async( req: Request, res: Response ) => {
     const { userId } = req.auth as ICustomRequestAuth;
@@ -42,7 +43,7 @@ const getUser = async( req: Request, res: Response ) => {
             employment: response.tutor?.employment,
             work_hours: response.tutor?.work_hours,
             expected_earnings: response.tutor?.expected_earnings,
-            subjects: response.subjects,
+            description: response.tutor?.description,
             is_logged_in: true,
         }
     })
@@ -85,7 +86,43 @@ const createUser = async( req: Request, res: Response ) => {
     })
 }
 
+const updateUser = async( req: Request, res: Response ) => {
+    const { userId, role } = req.auth as ICustomRequestAuth;
+    const sanitizedInputs = req.body as IUserUpdateSanitizedInput;
+
+    const response = await userUpdater.updateUser(userId, role, sanitizedInputs);
+    
+
+    res.status(StatusCodes.CREATED).json({
+        message: `${commonUtil.capitalizedFirstLatter(role)} created successfully!`,
+        payload: {
+            role: response?.auth?.role_id,
+            email: response?.auth?.email,
+            is_verified: response?.auth?.is_verified,
+            first_name: response?.user?.first_name,
+            last_name: response?.user?.last_name,
+            profile_picture: response?.user?.profile_picture,
+            country_code: response?.user?.country_code,
+            phone_number: response?.user?.phone_number,
+            address: response?.user?.address,
+            exp_earnings: response?.tutor?.expected_earnings,
+            highest_education_qualification: response?.tutor?.highest_education_qualification,
+            high_school: response?.tutor?.high_school,
+            degree: response?.tutor?.degree,
+            university: response?.tutor?.university,
+            previous_experience: response?.tutor?.previous_experience,
+            exp_confirmation: response?.tutor?.exp_confirmation,
+            interests: response?.subjects,
+            device: response?.tutor?.device,
+            employment: response?.tutor?.employment,
+            work_hours: response?.tutor?.work_hours,
+            expected_earnings: response?.tutor?.expected_earnings,
+        }
+    })
+}
+
 export default {
     getUser,
     createUser,
+    updateUser
 }

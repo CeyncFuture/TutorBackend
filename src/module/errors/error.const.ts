@@ -146,6 +146,11 @@ export const errorMessages = {
       "any.required": "Question is required!",
       "string.empty": "Question cannot be empty!",
       "string.base": "Question must be a string!",
+    },
+    PROFILE_PICTURE: {
+      "any.required": "Profile picture is required!",
+      "string.empty": "Profile picture cannot be empty!",
+      "string.base": "Profile picture must be a string!",
     }
   },
 };

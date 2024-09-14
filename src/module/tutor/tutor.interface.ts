@@ -17,7 +17,7 @@ interface ITutor {
     university: string;
     previous_experience: string;
     exp_confirmation: string;
-    interests: string;
+    // interests: string;
     device: string;
     employment: string;
     work_hours: number;
@@ -36,7 +36,7 @@ class Tutor extends Model<ITutor, ITutorModel> implements ITutor {
     public university!: string;
     public previous_experience!: string;
     public exp_confirmation!: string;
-    public interests!: string;
+    // public interests!: string;
     public device!: string;
     public employment!: string;
     public work_hours!: number;
