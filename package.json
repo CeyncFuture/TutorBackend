@@ -9,7 +9,8 @@
     "dev": "nodemon src/index.ts",
     "docker": "docker-compose up -d && nodemon src/index.ts",
     "build": "tsc",
-    "mini-build": "tsc && npx glob 'dist/*.js' | xargs -I {} uglifyjs {} --compress --mangle --output {}"
+    "copy-files": "mkdir ./dist/config/alert/email/templates && cp ./src/config/alert/email/templates/* ./dist/config/alert/email/templates/",
+    "mini-build": "tsc && npx glob 'dist/*.js' | xargs -I {} uglifyjs {} --compress --mangle --output {} && npm run copy-files"
   },
   "repository": {
     "type": "git",
