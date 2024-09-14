@@ -68,7 +68,6 @@ const requestOTP = async (userId: number) => {
 
     // Generate new OTP
     const otp = AuthUtil.generateOTP();
-    console.log(constants.SERVER.ENV, "+++++++++++++++++++++++++++++++++++++++++");
     
     // Send OTP based on the environment
     if (constants.SERVER.ENV === constants.ENV.PRODUCTION || constants.SERVER.ENV === constants.ENV.TEST) {
