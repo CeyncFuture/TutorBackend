@@ -129,6 +129,9 @@ export const constants = {
         IMAGE_MIME_TYPES: [
             'image/jpeg',  // JPEG Image
             'image/png',   // PNG Image
+        ],
+        DOCUMENT_MIME_TYPES: [
+            'application/pdf',
         ]
     },
 
