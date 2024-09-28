@@ -28,9 +28,8 @@ const createQuestion = async(req: Request, res: Response) => {
 
 const getQuestions = async(req: Request, res: Response) => {
     const page = parseInt(req.query.page as string, 10) || 1;
-    const size = parseInt(req.query.size as string, 10) || 20;
 
-    const response = await QuestionGetter.getQuestions(page, size)
+    const response = await QuestionGetter.getQuestions(page)
 
     res.status(StatusCodes.OK).json({
         message: "Subjects retrieved successfully!",

@@ -17,8 +17,16 @@ const findByUserId = async(userId: number) => {
     return await Tutor.findOne({where: {user_id: userId}})
 }
 
-const findTutors = async() => {
-    return Tutor.findAll({include: [{model: User}]});
+const findTutors = async(page: number) => {
+    return Tutor.findAll({
+        include: [
+            {
+                model: User
+            }
+        ],
+        limit: 20,
+        offset: page * 20
+    });
 }
 
 export default {

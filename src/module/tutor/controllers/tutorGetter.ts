@@ -1,7 +1,7 @@
 import tutorService from "../tutor.service";
 
-const getTutors = async() => {
-    return  await tutorService.findTutors();
+const getTutors = async(page: number) => {
+    return  await tutorService.findTutors(page);
 };
 
 export default {
