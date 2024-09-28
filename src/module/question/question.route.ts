@@ -14,6 +14,8 @@ import QuestionController from './question.controller';
 
 const route = Router();
 
+route.get("/",  AuthorizationHandler([constants.USER_ROLES.ALL]), QuestionController.getQuestions)
+
 route.post(
     "/",
     AuthorizationHandler([constants.USER_ROLES.ALL]), //TODO: student,

@@ -12,6 +12,7 @@ import AuthRouter from "./module/auth/auth.route";
 import UserRouter from "./module/user/user.route";
 import SubjectRouter from "./module/subject/subject.route";
 import QuestionRouter from "./module/question/question.route";
+import TutorRouter from "./module/tutor/tutor.route";
 
 const router = express.Router();
 
@@ -34,6 +35,11 @@ router.use(
 router.use(
     "/question",
     QuestionRouter
+)
+
+router.use(
+    "/tutor",
+    TutorRouter
 )
 
 export default router;
