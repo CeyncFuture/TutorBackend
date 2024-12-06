@@ -7,6 +7,7 @@
 
 import { Transaction } from "sequelize";
 import { ITutorModel, Tutor } from "./tutor.interface";
+import {User} from "../user/user.interface";
 
 const save = async( tutorModel: ITutorModel,transaction?: Transaction ) => {
     return await Tutor.create(tutorModel,{transaction})
@@ -16,7 +17,20 @@ const findByUserId = async(userId: number) => {
     return await Tutor.findOne({where: {user_id: userId}})
 }
 
+const findTutors = async(page: number) => {
+    return Tutor.findAll({
+        include: [
+            {
+                model: User
+            }
+        ],
+        limit: 20,
+        offset: page * 20
+    });
+}
+
 export default {
     save,
     findByUserId,
+    findTutors
 }

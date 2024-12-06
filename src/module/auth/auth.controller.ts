@@ -52,11 +52,12 @@ const userLogin = async( req: Request, res: Response ) => {
                 university: response.tutor?.university,
                 previous_experience: response.tutor?.previous_experience,
                 exp_confirmation: response.tutor?.exp_confirmation,
-                interests: response.tutor?.interests,
+                interests: response.subjects,
                 device: response.tutor?.device,
                 employment: response.tutor?.employment,
                 work_hours: response.tutor?.work_hours,
                 expected_earnings: response.tutor?.expected_earnings,
+                description: response.tutor?.description,
                 is_logged_in: true,
             },//TODO: managed above payload
         }
@@ -73,9 +74,13 @@ const userLogout = async( req: Request, res: Response ) => {
 const getOTP = async( req: Request, res: Response ) => {
     const { userId } = req.auth as ICustomRequestAuth;
 
-    await OTPHandler.requestOTP(userId);
+    const otp = await OTPHandler.requestOTP(userId);
+
     return res.status(StatusCodes.OK).json({
         message: successMessages.OTP_SENDED,
+        payload: {
+            otp,
+        }
     })
 };
 

@@ -14,10 +14,12 @@ import QuestionController from './question.controller';
 
 const route = Router();
 
+route.get("/",  AuthorizationHandler([constants.USER_ROLES.ALL]), QuestionController.getQuestions)
+
 route.post(
     "/",
     AuthorizationHandler([constants.USER_ROLES.ALL]), //TODO: student,
-    commonMiddleware.fileUpload("attachments",constants.FILE_VALIDATION.IMAGE_MIME_TYPES, 2),
+    commonMiddleware.fileUpload("attachments",[...constants.FILE_VALIDATION.IMAGE_MIME_TYPES, ...constants.FILE_VALIDATION.DOCUMENT_MIME_TYPES], 1),
     QuestionInputsSanitizer,
     QuestionController.createQuestion
 )

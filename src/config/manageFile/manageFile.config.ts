@@ -26,6 +26,7 @@ import { constants } from "../../constants";
 const getFTPConfig = (): IFTPConfig => {
   return({
       host: 'ftp.toptutorsglobal.com',
+      fileAccessURL: "https://server.toptutorsglobal.com/tutor_backend",
       user: 'tutor_backend@server.toptutorsglobal.com',
       password: 'Top_123$_Tutor',
       secure: false // Set to true if using FTPS

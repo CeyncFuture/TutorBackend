@@ -47,11 +47,11 @@ const findAllWithTutor = async(tutorId?: number) => {
     return await Subject.findAll({
         attributes: ["id","name"],
         include: [
-            {
-                model: SubjectCategory,
-                required: true,
-                attributes: ["name"]
-            },
+            // {
+            //     model: SubjectCategory,
+            //     required: true,
+            //     attributes: ["name"]
+            // },
             {
                 model: Tutor,
                 attributes: ["id"],

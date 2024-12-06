@@ -129,7 +129,18 @@ export const constants = {
         IMAGE_MIME_TYPES: [
             'image/jpeg',  // JPEG Image
             'image/png',   // PNG Image
+        ],
+        DOCUMENT_MIME_TYPES: [
+            'application/pdf',
         ]
+    },
+
+    FTP: {
+        HOST: process.env.FTP_HOST || "",
+        FILE_ACCESS_URL: process.env.FILE_ACCESS_URL,
+        USER: process.env.USER,
+        PASSWORD: process.env.PASSWORD,
+        SECURE: process.env.SECURE == "true" // Set to true if using FTPS
     }
 
 };

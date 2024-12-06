@@ -33,7 +33,6 @@ const ftpClient = new Client();
 // Helper function to generate a unique filename
 const generateUniqueFileName = (originalName: string): string => {
   const removeSpaces = originalName.replace(/\s+/g, '-');
-  console.log(removeSpaces,"+++++++++++++++++");
   
   const fileExtension = removeSpaces.split('.').pop(); // Get the file extension
   const uniqueName = uuidv4(); // Generate a unique ID
@@ -100,9 +99,8 @@ const generateUniqueFileName = (originalName: string): string => {
 //   }
 // };
 
-
-//Exporting functions
-const uploadFile = async(folderName: string, file: Express.Multer.File) => {
+//FTP File Upload
+const uploadFileToFTP = async(folderName: string, file: Express.Multer.File): Promise<string> => {
   const fileName = generateUniqueFileName(file.originalname);
   const tempFilePath = path.join(__dirname, '../../../temp', fileName);
 
@@ -127,9 +125,9 @@ const uploadFile = async(folderName: string, file: Express.Multer.File) => {
       await ftpClient.uploadFrom(tempFilePath, remoteFilePath);
 
       console.log(`File uploaded successfully to ${remoteFilePath}`);
-
+      // https://server.toptutorsglobal.com/tutor_backend/att/question_attachment/136819b1-fa84-4278-8906-b5bf11a9c38a.png
       // Construct the public URL (for example purposes, adapt based on your FTP server setup)
-      const publicUrl = `http://${Config.getFTPConfig().host}/${folderName}/${fileName}`;
+      const publicUrl = `${Config.getFTPConfig().fileAccessURL}/${folderName}/${fileName}`;
 
       return publicUrl;
   } catch (error) {
@@ -149,10 +147,31 @@ const uploadFile = async(folderName: string, file: Express.Multer.File) => {
       }
   }
   // return await uploadFileToS3(folderName, file.filename, file.buffer);
+};
+
+// Function to delete file on FTP (if required)
+const deleteFileFromFTP = async (fileURL: string) => {
+  // Extract file path from the URL and delete it using FTP client
+  try {
+    await ftpClient.access(Config.getFTPConfig());
+    await ftpClient.remove(fileURL);
+    ftpClient.close();
+    
+    console.log(`File deleted successfully from ${fileURL}`);
+  } catch (error) {
+    console.error('Error deleting FTP file:', error);
+    throw new InternalServerError('FTP file deletion failed');
+  }
+};
+
+//Exporting functions
+const uploadFile = async(folderName: string, file: Express.Multer.File): Promise<string>  => {
+  return await uploadFileToFTP(folderName, file);
+  // return await uploadFileToS3(folderName, file.filename, file.buffer);
 }
 
-const deleteFile = async(folderName: string, fileName: string) => {
-
+const deleteFile = async(fileURL: string): Promise<void> => {
+  return await deleteFileFromFTP(fileURL);
   // return await deleteFileFromS3(folderName, fileName);
 }
 

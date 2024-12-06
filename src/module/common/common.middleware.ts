@@ -44,7 +44,7 @@ const fileUpload = (field: string, acceptFormats: string[], maxCount?: number) =
     const upload = multer({
         storage,
         fileFilter,
-        limits: { fileSize: 5 * 1024 * 1024 }, // 1 MB limit
+        limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB limit
     });
 
     // Middleware function for handling file uploads and errors
@@ -80,7 +80,7 @@ const fileUpload = (field: string, acceptFormats: string[], maxCount?: number) =
                     }
                     return next(new BadRequestError(message)); // Pass error to Express error handler
                 } else {
-                    return next(err); // Pass other errors to Express error handler
+                    return next(new BadRequestError(err.message || "File uploading failed!")); // Pass other errors to Express error handler
                 }
             } else {
                 next(); // Proceed to the next middleware

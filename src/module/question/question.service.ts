@@ -16,7 +16,20 @@ const saveBulkQuestionAttachment = async(attachments: IQuestionAttachmentModel[]
     return await QuestionAttachment.bulkCreate(attachments, {transaction});
 }
 
+const findQuestions = async(page: number) => {
+    return Question.findAll({
+        include: [
+            {
+                model: QuestionAttachment
+            }
+        ],
+        limit: 20,
+        offset: page * 20
+    });
+}
+
 export default {
     saveQuestion,
     saveBulkQuestionAttachment,
+    findQuestions
 }

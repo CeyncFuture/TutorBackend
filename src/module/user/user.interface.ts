@@ -59,14 +59,38 @@ interface IUserMutationSanitizedInput {
     employment?: string;
     work_hours?: number;
     expected_earnings?: number;
+    description?: string
 
     /*Student data */
+}
+
+interface IUserUpdateSanitizedInput {
+    first_name: string;
+    last_name: string;
+    phone_number?: string;
+    address?: string;
+    profile_picture?: string;
+
+    /*Tutor data*/
+    highest_education_qualification?: string;
+    high_school?: string;
+    degree?: string;
+    university?: string;
+    previous_experience?: string;
+    exp_confirmation?: string;
+    device?: string;
+    employment?: string;
+    work_hours?: number;
+    expected_earnings?: number;
     description?: string
+
+    /*Student data */
 }
 
 export {
     User,
     IUser,
     IUserModel,
-    IUserMutationSanitizedInput
+    IUserMutationSanitizedInput,
+    IUserUpdateSanitizedInput
 }

@@ -51,10 +51,6 @@ const TutorSchema = async(sequelize: Sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            interests: {
-                type: DataTypes.STRING, // Adjust if you want to handle this with a separate table
-                allowNull: false,
-            },
             device: {
                 type: DataTypes.STRING,
                 allowNull: false,
@@ -71,6 +67,10 @@ const TutorSchema = async(sequelize: Sequelize) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
+            description: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            }
         },
         {
             sequelize,

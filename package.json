@@ -5,10 +5,13 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && node dist/index.js",
+    "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "docker": "docker-compose up -d && nodemon src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "copy-files": "mkdir ./dist/config/alert/email/templates && cp ./src/config/alert/email/templates/* ./dist/config/alert/email/templates/",
+    "delete-dist": "[ -d dist ] && rm -rf dist || true",
+    "mini-build": "npm run delete-dist && tsc && npx glob 'dist/**/*.js' | xargs -I {} uglifyjs {} --compress --mangle --output {} && npm run copy-files"
   },
   "repository": {
     "type": "git",
@@ -29,9 +32,12 @@
     "@types/multer": "^1.4.12",
     "@types/node": "^22.5.4",
     "@types/nodemailer": "^6.4.15",
+    "@types/ssh2-sftp-client": "^9.0.4",
     "@types/uuid": "^10.0.0",
+    "glob": "^11.0.0",
     "nodemon": "^3.1.4",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "uglify-js": "^3.19.3"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.645.0",

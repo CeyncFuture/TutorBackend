@@ -16,7 +16,10 @@ import UnauthorizedError from "../classes/UnauthorizedError";
 import NodeMailerError from "../classes/NodemailerError";
 
 const handleErrors = async(error: any ,req: Request, res: Response, next: NextFunction) => {
-    console.log("+++++++++++++++++++++++++", error);
+    console.log("++++++++++++ERROR+++++++++++++");
+    console.log(error);
+    console.log("++++++++++++++++++++++++++++++");
+    
     
     //create initial error object
     let customError: IError = {

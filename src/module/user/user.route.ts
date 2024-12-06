@@ -3,6 +3,7 @@ import { constants } from "../../constants";
 import UserController from "./user.controller";
 import AuthorizationHandler from "../auth/middlewares/authorizationHandler";
 import CreateUserSanitizer from "./middlewares/createUserSanitizer";
+import UpdateUserSanitizer from "./middlewares/updateUserSanitizer ";
 
 const route = Router();
 
@@ -17,6 +18,13 @@ route.post(
     AuthorizationHandler([constants.USER_ROLES.ALL]),
     CreateUserSanitizer,
     UserController.createUser
+)
+
+route.put(
+    "/",
+    AuthorizationHandler([constants.USER_ROLES.ALL]),
+    UpdateUserSanitizer,
+    UserController.updateUser
 )
 
 

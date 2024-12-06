@@ -14,6 +14,7 @@ interface IS3Config {
 
 interface IFTPConfig {
   host: string,
+  fileAccessURL: string,
   user: string,
   password: string,
   secure: boolean
