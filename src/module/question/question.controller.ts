@@ -10,6 +10,7 @@ import { StatusCodes } from "http-status-codes";
 import QuestionCreator from "./controllers/createQuestion";
 import { ICustomRequestAuth } from "../auth/auth.interface";
 import { IQuestionCreationSanitizeInputs } from "./question.interface";
+import QuestionGetter from "./controllers/questionGetter";
 
 const createQuestion = async(req: Request, res: Response) => {
     
@@ -25,6 +26,20 @@ const createQuestion = async(req: Request, res: Response) => {
     })
 };
 
+const getQuestions = async(req: Request, res: Response) => {
+    const page = parseInt(req.query.page as string, 10) || 1;
+
+    const response = await QuestionGetter.getQuestions(page)
+
+    res.status(StatusCodes.OK).json({
+        message: "Subjects retrieved successfully!",
+        payload: {
+            categories: response
+        }
+    })
+};
+
 export default {
     createQuestion,
+    getQuestions
 }
