@@ -18,6 +18,7 @@ interface IUser {
     country_code?: string;
     phone_number?: string;
     address?: string;
+    sharable_id?: string;
 }
 
 interface IUserModel extends Optional <IUser, "id" | "country_code" | "phone_number" | "address"> {}
@@ -31,6 +32,7 @@ class User extends Model<IUser, IUserModel> implements IUser {
     public country_code?: string;
     public phone_number?: string;
     public address?: string;
+    public sharable_id!: string;
 
     // Define the association properties
     public getAuth!: () => Promise<Auth | null>;

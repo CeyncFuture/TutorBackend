@@ -8,6 +8,11 @@ import UpdateUserSanitizer from "./middlewares/updateUserSanitizer ";
 const route = Router();
 
 route.get(
+    '/admin/:sharableId',
+    UserController.getAdminDetails
+)
+
+route.get(
     '/',
     AuthorizationHandler([constants.USER_ROLES.ALL]),
     UserController.getUser

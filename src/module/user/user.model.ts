@@ -8,6 +8,7 @@
 import { DataTypes, Sequelize } from "sequelize";
 import { User } from "./user.interface";
 import { constants } from "../../constants";
+import { v4 as uuidv4 } from 'uuid';
 
 const UserSchema = async(sequelize: Sequelize) => {
     User.init(
@@ -51,6 +52,10 @@ const UserSchema = async(sequelize: Sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
+            sharable_id: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            }
         },
         {
             sequelize,
@@ -60,6 +65,13 @@ const UserSchema = async(sequelize: Sequelize) => {
             underscored: true,
         }
     );
+
+    // Add hook to auto-generate sharableId
+    User.beforeCreate((user) => {
+        if (!user.sharable_id) {
+            user.sharable_id = `${user.first_name}_${uuidv4()}`;
+        }
+    });
 
     User.sync();
 }
