@@ -49,7 +49,7 @@ const getUserData = async( userId: number, role: string ) => {
     }
 }
 
-const getSharableProfileData = async (adminUserId: number) => {
+const getSharableProfileData = async (adminUserId: string) => {
 
         //Find is user exist
         const user = await UserService.findByAdminId(adminUserId);
