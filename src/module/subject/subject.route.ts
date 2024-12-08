@@ -13,7 +13,7 @@ const route = Router();
 
 route.get(
     "/",
-    AuthorizationHandler([constants.USER_ROLES.ALL]),
+    // AuthorizationHandler([constants.USER_ROLES.ALL]), // open endpoints
     SubjectController.getSubjects
 )
 
