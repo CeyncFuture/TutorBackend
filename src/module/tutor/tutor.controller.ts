@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import TutorGetter from "./controllers/tutorGetter";
 
 const getTutors = async(req: Request, res: Response) => {
-    const page = parseInt(req.query.page as string, 10) || 1;
+    const page = parseInt(req.query.page as string, 10) || 0;
 
     const response = await TutorGetter.getTutors(page)
 

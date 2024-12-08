@@ -22,9 +22,7 @@ const findQuestions = async(page: number) => {
             {
                 model: QuestionAttachment
             }
-        ],
-        limit: 20,
-        offset: page * 20
+        ]
     });
 }
 
