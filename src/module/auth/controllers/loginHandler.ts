@@ -41,10 +41,12 @@ const login = async( sanitizedInputs: ILoginSanitizedInputs ) => {
     const subjects: number[] = [];
     dbSubjects && dbSubjects.forEach((subject)=> {
         subjects.push(subject.id);
-    });  
+    });
+
+    const token = await AuthUtil.generateTokens(authTokenBodyParam) as IAuthResponse;
     
     return {
-        token: AuthUtil.generateTokens(authTokenBodyParam) as IAuthResponse,
+        token,
         user: dbExistUser,
         auth: dbExistAuth,
         tutor: dbExistTutor,

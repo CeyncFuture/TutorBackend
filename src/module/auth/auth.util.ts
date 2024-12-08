@@ -23,7 +23,7 @@ const compareStringWithHash = async( payload: string, hash: string ): Promise<bo
 }
 
 //JWT functions
-const generateTokens = ( payload: IAuthTokenBody ): IAuthResponse => {
+const generateTokens = async ( payload: IAuthTokenBody ): Promise<IAuthResponse> => {
     
     //Create access token
     const access_token = jwt.sign(

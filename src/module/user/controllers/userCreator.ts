@@ -108,12 +108,14 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
                 role: dbExistAuth.role_id,
             }
 
+            const token = await AuthUtil.generateTokens(authTokenBodyParam) as IAuthResponse;
+
             return {
                 user: dbExistUser,
                 auth: dbExistAuth,
                 tutor: dbTutor,
                 subjects: subjects,
-                token: AuthUtil.generateTokens(authTokenBodyParam) as IAuthResponse,
+                token
             }
         }catch(err){
             await transaction.rollback();
@@ -142,10 +144,18 @@ const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitize
 
             await transaction.commit();
 
+            const authTokenBodyParam: IAuthTokenBody = {
+                user_id: dbExistUser.id,
+                role: dbExistAuth.role_id,
+            }
+
+            const token = await AuthUtil.generateTokens(authTokenBodyParam) as IAuthResponse;
+
             return {
             user: dbExistUser,
             auth: dbExistAuth,
             student: dbStudent,
+            token
         }
         }catch(err){
             await transaction.rollback();
