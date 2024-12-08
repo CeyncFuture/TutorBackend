@@ -29,7 +29,7 @@ const authLoginInputSanitizer = (req: Request, res: Response, next: NextFunction
         ...req.body,
         email: req.body.email.toLowerCase(),
     };
-
+ 
     next();
 }
 

@@ -42,9 +42,17 @@ const findById = async( userId: number ) => {
     });
 };
 
+const findByAdminId = async ( sharableId: number) => {
+    console.log(sharableId)
+    return await User.findOne({
+        where: {sharable_id: sharableId},
+    })
+}
+
 export default {
     save,
     findByAuthId,
     findByPk,
     findById,
+    findByAdminId,
 }
