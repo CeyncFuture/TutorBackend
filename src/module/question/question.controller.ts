@@ -34,7 +34,7 @@ const getQuestions = async(req: Request, res: Response) => {
     res.status(StatusCodes.OK).json({
         message: "Questions retrieved successfully!",
         payload: {
-            categories: response
+            questions: response
         }
     })
 };

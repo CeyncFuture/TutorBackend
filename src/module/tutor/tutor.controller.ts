@@ -10,7 +10,7 @@ const getTutors = async(req: Request, res: Response) => {
     res.status(StatusCodes.OK).json({
         message: "Tutors retrieved successfully!",
         payload: {
-            categories: response
+            tutors: response
         }
     })
 };
