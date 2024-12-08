@@ -7,7 +7,8 @@
 
 import { Transaction } from "sequelize";
 import { ITutorModel, Tutor } from "./tutor.interface";
-import {User} from "../user/user.interface";
+import { User } from "../user/user.interface";
+import { Subject } from "../subject/subject.interface";
 
 const save = async( tutorModel: ITutorModel,transaction?: Transaction ) => {
     return await Tutor.create(tutorModel,{transaction})
@@ -22,6 +23,11 @@ const findTutors = async(page: number) => {
         include: [
             {
                 model: User
+            },
+            {
+                model: Subject,
+                as: "subjects",
+                attributes: ['id','category_id','name']
             }
         ],
         limit: 20,
