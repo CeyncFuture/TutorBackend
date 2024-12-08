@@ -17,13 +17,20 @@ const saveBulkQuestionAttachment = async(attachments: IQuestionAttachmentModel[]
 }
 
 const findQuestions = async(page: number) => {
-    return Question.findAll({
+    const { count, rows } = await Question.findAndCountAll({
         include: [
             {
                 model: QuestionAttachment
             }
-        ]
+        ],
+        limit: 10,
+        offset: page * 10
     });
+    
+    return {
+        questions: rows,
+        totalElements: count
+    }
 }
 
 export default {

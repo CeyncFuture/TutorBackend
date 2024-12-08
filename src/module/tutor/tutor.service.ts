@@ -19,7 +19,7 @@ const findByUserId = async(userId: number) => {
 }
 
 const findTutors = async(page: number) => {
-    return Tutor.findAll({
+    const {count, rows} = await Tutor.findAndCountAll({
         include: [
             {
                 model: User
@@ -33,6 +33,11 @@ const findTutors = async(page: number) => {
         limit: 20,
         offset: page * 20
     });
+
+    return {
+        tutors: rows,
+        totalElements: count
+    }
 }
 
 export default {
