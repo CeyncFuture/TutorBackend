@@ -32,7 +32,7 @@ const getQuestions = async(req: Request, res: Response) => {
     const response = await QuestionGetter.getQuestions(page)
 
     res.status(StatusCodes.OK).json({
-        message: "Subjects retrieved successfully!",
+        message: "Questions retrieved successfully!",
         payload: {
             categories: response
         }
