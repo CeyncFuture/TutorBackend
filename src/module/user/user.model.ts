@@ -69,7 +69,7 @@ const UserSchema = async(sequelize: Sequelize) => {
     // Add hook to auto-generate sharableId
     User.beforeCreate((user) => {
         if (!user.sharable_id) {
-            user.sharable_id = `${user.first_name}_${uuidv4()}`;
+            user.sharable_id = `${user.first_name}-${uuidv4()}`;
         }
     });
 

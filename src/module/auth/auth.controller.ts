@@ -58,6 +58,7 @@ const userLogin = async( req: Request, res: Response ) => {
                 work_hours: response.tutor?.work_hours,
                 expected_earnings: response.tutor?.expected_earnings,
                 description: response.tutor?.description,
+                sharable_id: response.user.sharable_id, // currently only for user
                 is_logged_in: true,
             },//TODO: managed above payload
         }
