@@ -40,7 +40,7 @@ const TutorSchema = async(sequelize: Sequelize) => {
                 allowNull: false,
             },
             university: {
-                type: DataTypes.BOOLEAN,
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             previous_experience: {
