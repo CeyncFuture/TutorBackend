@@ -23,6 +23,7 @@ import { IAuthResponse, IAuthTokenBody } from "../../auth/auth.interface";
 import AuthUtil from "../../auth/auth.util";
 
 const createUser = async( userId: number, sanitizedInputs: IUserMutationSanitizedInput ) => {
+    
     //get exist user table records
     const dbExistUser = await userService.findByPk(userId);
 

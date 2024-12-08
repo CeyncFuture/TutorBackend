@@ -51,9 +51,9 @@ const getUser = async( req: Request, res: Response ) => {
 
 const getAdminDetails = async( req: Request, res: Response ) => {
 
-    const { sharableId } = req.params;
+    const { shareableId } = req.params;
 
-    const response = await UserGetter.getSharableProfileData(parseInt(sharableId));
+    const response = await UserGetter.getSharableProfileData(shareableId);
 
     res.status(StatusCodes.OK).json({
         message: "User data retrieved successfully!",

@@ -8,7 +8,7 @@ import UpdateUserSanitizer from "./middlewares/updateUserSanitizer ";
 const route = Router();
 
 route.get(
-    '/admin/:sharableId',
+    '/admin/:shareableId',
     UserController.getAdminDetails
 )
 
