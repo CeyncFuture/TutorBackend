@@ -9,7 +9,7 @@ import { DataTypes, Sequelize } from "sequelize";
 import { Question, QuestionAttachment } from "./question.interface";
 import { constants } from "../../constants";
 
-const QualificationSchema = (sequelize: Sequelize) => {
+const QuestionSchema = (sequelize: Sequelize) => {
     Question.init(
         {
             id: {
@@ -46,7 +46,7 @@ const QualificationSchema = (sequelize: Sequelize) => {
     Question.sync();
 };
 
-const QualificationAttachmentSchema = (sequelize: Sequelize) => {
+const QuestionAttachmentSchema = (sequelize: Sequelize) => {
     QuestionAttachment.init(
         {
             id: {
@@ -80,6 +80,6 @@ const QualificationAttachmentSchema = (sequelize: Sequelize) => {
 }
 
 export {
-    QualificationSchema,
-    QualificationAttachmentSchema,
+    QuestionSchema,
+    QuestionAttachmentSchema,
 }

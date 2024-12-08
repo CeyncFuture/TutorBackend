@@ -15,7 +15,7 @@ import TutorSchema from "../../module/tutor/tutor.model";
 import PendingUserSchema from "../../module/pendingUser/pendingUser.model";
 import { SubjectCategorySchema, SubjectSchema } from "../../module/subject/subject.model";
 import SubjectsTutorsSchema from "../../module/joinTables/subjectsTutors/subjectsTutors.model";
-import { QualificationSchema, QualificationAttachmentSchema } from "../../module/question/question.model";
+import { QuestionSchema, QuestionAttachmentSchema } from "../../module/question/question.model";
 
 //import models
 import { Auth } from "../../module/auth/auth.interface";
@@ -43,8 +43,8 @@ const modelDefiners: typeof AuthSchema[] = [
     SubjectSchema,
     SubjectCategorySchema,
     SubjectsTutorsSchema,
-    QualificationSchema,
-    QualificationAttachmentSchema,
+    QuestionSchema,
+    QuestionAttachmentSchema,
 ];
 
 //Add relations 
@@ -105,10 +105,10 @@ const initializeModelRelations = () => {
     foreignKey: "question_id",
   });
   User.hasMany(Question,{
-    foreignKey: "user_id",
+    foreignKey: "student_user_id",
   });
   Question.belongsTo(User,{
-    foreignKey: "user_id",
+    foreignKey: "student_user_id",
   });
 }
 
